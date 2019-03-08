@@ -3,8 +3,13 @@ const { dialog } = require('electron').remote;
 const path = require('path');
 
 window.dialog = window.dialog || {},
+
+
     function (n) {
         dialog.handler = {
+            variables: {
+                imgId: ''
+            },
             import: function () {
                 dialog.showOpenDialog((filename) => {
                     if (filename === undefined) {
@@ -67,12 +72,19 @@ window.dialog = window.dialog || {},
                         'left': event.pageX,
                         'top': event.pageY
                     })
+                    dialog.handler.variables.imgId = event.target.id;
+                })
+                $('#context-menu ul li').click(function (event) {
+                    //FIXME: QUANG
+                    console.log(dialog.handler.variables.imgId)
+                    console.log(event.target.id)
                 })
                 $('*').click(function () {
                     $('.tags-container').css({
                         'display': 'none'
                     })
                 })
+
             }
         };
 
