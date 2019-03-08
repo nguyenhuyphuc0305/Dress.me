@@ -2,59 +2,29 @@ const fs = require('fs');
 const { dialog } = require('electron').remote;
 const path = require('path');
 
+const ObjectDatabase = require('objecttagdatabase');
+
+var database = []
+
 window.dialog = window.dialog || {},
-
-
     function (n) {
         dialog.handler = {
             variables: {
                 imgId: ''
             },
             import: function () {
-                dialog.showOpenDialog((filename) => {
-                    if (filename === undefined) {
-                        console.log('No file was chosen')
-                        return;
-                    }
-                    var pathToClothes = path.join('assets', 'database', 'clothes')
-                    var pathToTags = path.join('assets', 'database', 'tags')
-                    var baseName = path.basename(filename[0])
-                    fs.copyFile(filename[0], path.join(pathToClothes, baseName), (err) => {
-                        if (err) {
-                            return;
-                        }
-                    })
-                    var content = 'Hi!'
+                dialog.showOpenDialog((imagePaths) => {
+                    if (imagePaths === undefined) { return; }
 
-                    fs.writeFile(path.join(pathToTags, baseName.split('.')[0]) + '.txt', content, 'utf-8', (err) => {
-                        if (err) {
-                            return;
-                        }
-                    })
+                    ObjectDatabase.saveImagesAsDatabase(imagePaths)
                 })
-            },
-            displayImages: function () {
-                var pathToClothes = path.join('assets', 'database', 'clothes')
-                fs.readdir(pathToClothes, (err, files) => {
-                    if (err) {
-                        console.log('Error!')
-                    }
-                    $('.imported-img').remove();
-                    files.forEach(file => {
-                        $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + file.split('.')[0] + "' src='" + path.join(pathToClothes, file) + "'>")
-                    })
-                })
-
             },
             showStoredImagesOnload: function () {
-                var pathToClothes = path.join('assets', 'database', 'clothes')
-                fs.readdir(pathToClothes, (err, files) => {
-                    if (err) {
-                        console.log('Error!')
-                    }
-                    files.forEach(file => {
-                        $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + file.split('.')[0] + "' src='" + path.join(pathToClothes, file) + "'>")
-                    })
+                database = ObjectDatabase.loadDatabase()
+
+                if (database.length == 0) { return }
+                database.forEach(function(cloth) {
+                    $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
                 })
             },
             init: function () {
@@ -76,15 +46,15 @@ window.dialog = window.dialog || {},
                 })
                 $('#context-menu ul li').click(function (event) {
                     //FIXME: QUANG
-                    console.log(dialog.handler.variables.imgId)
-                    console.log(event.target.id)
+                    const fileName = dialog.handler.variables.imgId;
+                    const tag = event.target.id
+                    ObjectDatabase.appendTagToImage(fileName, tag)
                 })
-                $('*').click(function () {
+                $('#import-menu-display').click(function () {
                     $('.tags-container').css({
                         'display': 'none'
                     })
                 })
-
             }
         };
 

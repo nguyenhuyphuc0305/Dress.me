@@ -5,7 +5,8 @@
   "main": "main.js",
   "dependencies": {
     "electron": "^4.0.5",
-    "electron-reload": "^1.4.0"
+    "electron-reload": "^1.4.0",
+    "objecttagdatabase": "^1.0.5"
   },
   "devDependencies": {},
   "scripts": {
