@@ -1,0 +1,16 @@
+{
+  "name": "dress.me",
+  "version": "1.0.0",
+  "description": "An outfit app",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "^4.0.5",
+    "electron-reload": "^1.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Team 67",
+  "license": "MIT"
+}

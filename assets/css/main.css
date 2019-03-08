@@ -1,0 +1,216 @@
+/* ----------------------------------------------- */
+/* BASIC SETUP */
+/* ----------------------------------------------- */
+
+* {
+    margin:0;
+    padding:0;
+    border:0;
+    vertical-align:baseline;
+    box-sizing: border-box;
+    font-family: 'Lato', 'Arial', sans-serif;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    font-size: 12pt;
+}
+
+/* ----------------------------------------------- */
+/* REUSABLE COMPONENTS */
+/* ----------------------------------------------- */
+
+
+h1 {
+    word-spacing: 4px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    word-spacing: 2px;
+    letter-spacing: 1px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.inner {
+    margin: auto;
+    max-width: 90%;
+}
+
+.btn:link,
+.btn:visited {
+    display: inline-block;
+    border: 1px solid #e67e22;
+    background-color: #e67e22;
+    /* color:#d1d7e0; */
+    color: #fff;
+    border-radius: 200px;
+    padding: 10px 30px;
+    margin-right: 20px;
+    -webkit-transition: background-color 0.2s, border 0.2s, color 0.2s;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+.btn:hover,
+.btn:active {
+    background-color: #cf6d17;
+}
+
+/* ----------------------------------------------- */
+/* SIDEBAR */
+/* ----------------------------------------------- */
+
+.logo {
+    height: 2.9em;
+    width: auto;
+    float: left;
+    margin-top: 0.3em;
+    margin-left: 1em;
+}
+
+#sidebar {
+    height: 7.5vh;
+    left: 0;
+    line-height: 3.5em;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    background: #fff;
+}
+
+#sidebar div ul {
+    float: right;
+    list-style: none;
+}
+
+#sidebar div ul li {
+    display: inline-block;
+    margin-left: 5em; 
+}
+
+#sidebar div ul a:link,
+#sidebar div ul a:visited {
+    padding: 18px 0;
+    text-transform: uppercase;
+    font-size: 90%;
+    border-top: 2px solid transparent;
+    color:#162838;
+    -webkit-transition: color 0.2s, border-top 0.2s;
+    transition: color 0.2s, border-top 0.2s;
+}
+
+#sidebar div ul a:hover {
+    color: #e67e22;
+    border-top: 2px solid #e67e22;
+}
+
+.current-page {
+    color: #e67e22 !important;
+    border-top: 2px solid #e67e22 !important;
+}
+
+/* ----------------------------------------------- */
+/* WRAPPER */
+/* ----------------------------------------------- */
+
+#wrapper section {
+    display: none;
+    background-image: linear-gradient(rgba(45, 40, 62, 0.7), rgba(45, 40, 62, 0.7)),url(images/main.jpg)
+}
+
+.wrapper {
+    position: relative;
+}
+
+.wrapper.fullscreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 92.5vh;;
+}
+
+/* ----------------------------------------------- */
+/* WELCOME */
+/* ----------------------------------------------- */
+
+#welcome-menu-display {
+    height: 92.5vh;
+    padding: 0;
+    margin: 0;
+}
+
+#welcome-menu-display .hero-content {
+    position: absolute;
+    color: #fff;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 7%;
+}
+
+#welcome-menu-display .hero-content h1 {
+    text-transform: uppercase;
+    font-size: 240%;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+#welcome-menu-display .hero-content1 {
+    position: absolute;
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    transform: translateY(-50%);
+}
+
+#welcome-menu-display .hero-content1 .logo {
+    height: 10em;
+    width: auto;
+}
+
+
+/* ----------------------------------------------- */
+/* TAGS SELECTION */
+/* ----------------------------------------------- */
+
+.tags-container {
+    background-color: #f6f6f6;
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: auto;
+}
+
+.context-menu {
+    box-shadow: 0 0 20px 0 #ccc;
+}
+
+.context-menu ul li:not(.tags-separator) {
+    padding: 3px 5px;
+    font-size: 90%;
+    border-left: 3px solid transparent;
+    transition: background-color .2s, border-left .2s;
+}
+
+.context-menu ul li:hover {
+    background-color: #eee;
+    border-left: 3px solid #666;
+}
+
+.tags-separator {
+    height: 1px;
+    background-color: #dedede;
+    margin: 1px 0;
+}
+
+.imported-img {
+    height: 200px;
+}
+
+.button-container {
+    text-align: center;
+    margin: 10px 0;
+}

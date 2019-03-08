@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Dress.me</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel='stylesheet' href='assets/css/main.css'>
+    <link rel='stylesheet' href='assets/css/grid.css'>
+    <link rel='stylesheet' href='assets/css/normalize.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel='import' href='sections/about.html'>
+    <link rel='import' href='sections/clothes.html'>
+    <link rel='import' href='sections/import.html'>
+    <link rel='import' href='sections/welcome.html'>
+
+</head>
+
+<body>
+    <!-- Side bar -->
+    <section id='sidebar'>
+        <div class="inner">
+            <img class='logo' src='assets/css/images/black_logo.png'>
+            <ul>
+                <li><a id="welcome-menu" data-section="welcome" href="#">Welcome</a></li>
+                <li><a id="import-menu" data-section="import" href="#">Import</a></li>
+                <li><a id="clothes-menu" data-section="clothes" href="#">Clothes</a></li>
+                <li><a id="about-menu" data-section="about" href="#">About</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+    </div>
+    <div class='tags-container'>
+        <div id='context-menu' class="context-menu">
+            <ul>
+                <li>Red</li>
+                <li>Orange</li>
+                <li>Yellow</li>
+                <li>Green</li>
+                <li>Blue</li>
+                <li>Indigo</li>
+                <li>Purple</li>
+                <li class='tags-separator'></li>
+                <li>Spring</li>
+                <li>Summer</li>
+                <li>Fall</li>
+                <li>Winter</li>
+                <li class="tags-separator"></li>
+                <li>Top</li>
+                <li>Bottom</li>
+                <li>Accessories</li>
+                <li class='tags-separator'></li>
+                <li>Water-proof</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script>window.$ = window.jQuery = require('./assets/js/jquery.min.js');</script>
+    <script>
+        require('./assets/js/menu.js')
+        require('./assets/js/dialog.js')
+    </script>
+</body>
+
+</html>
