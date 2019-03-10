@@ -1,7 +1,9 @@
 'use strict';
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-// require('electron-reload')(__dirname);
+require('electron-reload')(path.join(__dirname, 'index.html'),
+    { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
+);
 
 let win
 

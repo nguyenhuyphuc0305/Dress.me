@@ -19,11 +19,19 @@ window.dialog = window.dialog || {},
                     ObjectDatabase.saveImagesAsDatabase(imagePaths)
                 })
             },
+            displayImages: function () {
+                database = ObjectDatabase.loadDatabase()
+                $('.imported-img').remove()
+                if (database.length == 0) { return }
+                database.forEach(function (cloth) {
+                    $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
+                })
+            },
             showStoredImagesOnload: function () {
                 database = ObjectDatabase.loadDatabase()
 
                 if (database.length == 0) { return }
-                database.forEach(function(cloth) {
+                database.forEach(function (cloth) {
                     $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
                 })
             },
@@ -32,7 +40,7 @@ window.dialog = window.dialog || {},
                 $('#import-btn').click(function () {
                     dialog.handler.import()
                 })
-                $('#read-file').click(function () {
+                $('#display-btn').click(function () {
                     dialog.handler.displayImages()
                 })
                 $('#img-container').on('contextmenu', '.imported-img', function (event) {
@@ -45,7 +53,6 @@ window.dialog = window.dialog || {},
                     dialog.handler.variables.imgId = event.target.id;
                 })
                 $('#context-menu ul li').click(function (event) {
-                    //FIXME: QUANG
                     const fileName = dialog.handler.variables.imgId;
                     const tag = event.target.id
                     ObjectDatabase.appendTagToImage(fileName, tag)
