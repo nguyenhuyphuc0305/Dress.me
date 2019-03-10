@@ -4,9 +4,9 @@
   "description": "An outfit app",
   "main": "main.js",
   "dependencies": {
-    "electron": "^4.0.5",
+    "electron": "^4.0.8",
     "electron-reload": "^1.4.0",
-    "objecttagdatabase": "^1.0.5"
+    "objecttagdatabase": "^1.0.8"
   },
   "devDependencies": {},
   "scripts": {
