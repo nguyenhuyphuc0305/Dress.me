@@ -41,3 +41,8 @@ spring
 purple
 indigo
 blue
+red
+green
+indigo
+winter
+bottom
