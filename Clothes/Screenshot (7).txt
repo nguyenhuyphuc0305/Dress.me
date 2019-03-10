@@ -1,1 +1,6 @@
-orange
+green
+summer
+winter
+red
+yellow
+fall

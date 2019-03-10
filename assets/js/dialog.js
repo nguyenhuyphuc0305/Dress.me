@@ -21,6 +21,7 @@ window.dialog = window.dialog || {},
             },
             displayImages: function () {
                 database = ObjectDatabase.loadDatabase()
+                console.log(database)
                 $('.imported-img').remove()
                 if (database.length == 0) { return }
                 database.forEach(function (cloth) {
@@ -50,12 +51,25 @@ window.dialog = window.dialog || {},
                         'left': event.pageX,
                         'top': event.pageY
                     })
+
                     dialog.handler.variables.imgId = event.target.id;
+
+                    var tagList = fs.readFileSync(path.join('Clothes', event.target.id + '.txt')).toString().split("\n");
+                    tagList.pop()
+                    tagList.forEach(function (checkTag) {
+                        $('span#' + checkTag).css({ 'display': 'block' });
+                    });
+
                 })
                 $('#context-menu ul li').click(function (event) {
                     const fileName = dialog.handler.variables.imgId;
                     const tag = event.target.id
-                    ObjectDatabase.appendTagToImage(fileName, tag)
+                    tagList = ObjectDatabase.addOrDeleteTagFromImage(fileName, tag)
+                    $('.icon-li').css({ 'display': 'none' });
+                    tagList.forEach(function (checkTag) {
+                        $('span#' + checkTag).css({ 'display': 'block' });
+                    });
+
                 })
                 $('#import-menu-display').click(function () {
                     $('.tags-container').css({

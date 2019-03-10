@@ -180,7 +180,7 @@ a {
     background-color: #f6f6f6;
     display: none;
     position: absolute;
-    width: 100px;
+    width: 115px;
     height: auto;
 }
 
@@ -198,6 +198,12 @@ a {
 .context-menu ul li:hover {
     background-color: #eee;
     border-left: 3px solid #666;
+}
+
+.icon-li {
+    display: none;
+    float: right; 
+    margin-top: 1px;
 }
 
 .tags-separator {
