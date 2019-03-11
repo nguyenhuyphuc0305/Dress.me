@@ -1,9 +1,11 @@
 'use strict';
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-require('electron-reload')(path.join(__dirname, 'index.html'),
+
+require('electron-reload')(__dirname,
     { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
 );
+// require('electron-reload')(__dirname)
 
 let win
 
@@ -11,7 +13,8 @@ function createWindow() {
     win = new BrowserWindow({
         width: 1281,
         height: 800,
-        icon: path.join(__dirname, 'assets/icon/png/icon_64x64.png')
+        //FIX ME QUANG: add icons for mac/windows/Linux. This is just temporary
+        icon: path.join(__dirname, 'assets/icons/png/icon_64x64.png')
     })
 
     win.loadFile('index.html')
@@ -36,7 +39,3 @@ app.on('activate', () => {
         createWindow()
     }
 })
-
-//Hello from Quang
-//Hello from Phuc
-//fadsjffa

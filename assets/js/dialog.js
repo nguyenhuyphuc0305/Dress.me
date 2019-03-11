@@ -69,7 +69,6 @@ window.dialog = window.dialog || {},
                     tagList.forEach(function (checkTag) {
                         $('span#' + checkTag).css({ 'display': 'block' });
                     });
-
                 })
                 $('#import-menu-display').click(function () {
                     $('.tags-container').css({
