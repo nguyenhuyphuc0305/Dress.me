@@ -10,7 +10,6 @@
     box-sizing: border-box;
     font-family: 'Lato', 'Arial', sans-serif;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
     font-size: 12pt;
 }
 
@@ -41,8 +40,8 @@ a {
 .btn:link,
 .btn:visited {
     display: inline-block;
-    border: 1px solid #e67e22;
-    background-color: #e67e22;
+    border: 1px solid  #46A5DD;
+    background-color:  #46A5DD;
     color: #fff;
     border-radius: 200px;
     padding: 10px 30px;
@@ -53,7 +52,7 @@ a {
 
 .btn:hover,
 .btn:active {
-    background-color: #cf6d17;
+    background-color: #2383bc;
 }
 
 /* ----------------------------------------------- */
@@ -85,7 +84,11 @@ a {
     text-align: center;
     top: 0;
     width: 100%;
-    background: #fff
+    background: #fff;
+    position: fixed;
+    top: 0;
+    display: block;
+    z-index: 1;
 }
 
 #sidebar div ul {
@@ -110,13 +113,13 @@ a {
 }
 
 #sidebar div ul a:hover {
-    color: #e67e22;
-    border-top: 2px solid #e67e22;
+    color:  #46A5DD;
+    border-top: 2px solid  #46A5DD;
 }
 
 .current-page {
-    color: #e67e22 !important;
-    border-top: 2px solid #e67e22 !important;
+    color:  #46A5DD !important;
+    border-top: 2px solid  #46A5DD !important;
 }
 
 /* ----------------------------------------------- */
@@ -125,30 +128,49 @@ a {
 
 #wrapper section {
     display: none;
-    background-image: linear-gradient(rgba(45, 40, 62, 0.7), rgba(45, 40, 62, 0.7)), url(images/main.jpg);
-    background-size: cover;
+    overflow-x: hidden;
 }
 
 .wrapper {
     position: relative;
+    top: 7.5vh;
 }
 
 .wrapper.fullscreen {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 92.5vh;;
+    min-height: 92.5vh;
+    overflow: scroll;
 }
 
+.wrapper::-webkit-scrollbar {
+    width: 10px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 20px;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
+}
 /* ----------------------------------------------- */
 /* WELCOME */
 /* ----------------------------------------------- */
+
+#welcome-menu {
+    outline: none;
+}
 
 #welcome-menu-display {
     height: 92.5vh;
     padding: 0;
     margin: 0;
-
+    background-image: linear-gradient(rgba(45, 40, 62, 0.7), rgba(45, 40, 62, 0.7)), url(images/main.jpg);
+    background-size: cover;
 }
 
 #welcome-menu-display .hero-content {
@@ -209,7 +231,6 @@ a {
 .icon-li {
     display: none;
     float: right; 
-    margin-top: 1px;
 }
 
 .tags-separator {
@@ -219,10 +240,229 @@ a {
 }
 
 .imported-img {
-    height: 200px;
+    height: 283.4px;
 }
+
+.imported-img:nth-of-type(5n+1) { margin-left: 0; }
 
 .button-container {
     text-align: center;
     margin: 10px 0;
+    overflow: hidden;
+    display: block;
+    position: absolute;
+    width: 100%;
+}
+
+
+
+
+/* ----------------------------------------------- */
+/* IMPORT SECTION */
+/* ----------------------------------------------- */
+
+#import-menu {
+    outline: none;
+}
+
+#import-menu-display {
+    background-image: url(images/background_2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#img-container {
+    display: block;
+    position: absolute;
+    top: 61.2px;
+    width: 100%;
+    left: 5%;
+}
+
+/* ----------------------------------------------- */
+/* CLOTHES SECTION */
+/* ----------------------------------------------- */
+
+#clothes-menu {
+    outline: none;
+}
+
+#clothes-menu-display {
+    background-image: url(images/background_2.jpg);
+    background-size: cover;
+}
+
+.clothes-display-box {
+    display: block;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+}
+.clothes-display-container {
+    position: absolute;
+    display: block;
+    width: 82%;
+    height: 87%;
+    top: 10%;
+    left: 9%;
+}
+
+.clothes-select-box {
+    position: absolute;
+    display: block;
+    right: 0;
+    width: 50%;
+    height: 100%;
+}
+
+.clothes-select-container {
+    position: absolute;
+    display: block;
+    width: 85%;
+    height: 90%;
+    top: 5%;
+}
+
+.clothes-select-header {
+    position: absolute;
+    display: block;
+    height: 55px;
+    width: 100%;
+    background-color: #7fc0de;
+    background-image: linear-gradient(#7fc0de, #46A5DD);
+    border-radius: 25px;
+    z-index: 1;
+}
+
+.below-clothes-select-header {
+    display: block;
+    position: absolute;
+    top: 27.5px;
+    height: calc(100% - 27.5px);
+    left: 2%;
+    width: 96%;
+    padding-top: 30px;
+    background-color: rgba(136, 169, 184, 0.5)
+}
+
+.below-below-clothes-select-header{
+    display: block;
+    position: absolute;
+    height: calc(100% - 30px);
+    width: 100%;
+    overflow-y: scroll;
+    bottom: 0
+}
+
+.below-below-clothes-select-header::-webkit-scrollbar {
+    width: 10px;
+}
+
+.below-below-clothes-select-header::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 20px;
+}
+
+.below-below-clothes-select-header::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
+}
+
+.icon-button:nth-of-type(4n+1) {    
+    top: calc(5% + 55px + 15px);
+}
+
+.icon-button:nth-of-type(4n+2) {
+    top: calc(5% + 55px + 40px + 15px + 15px)
+}
+
+.icon-button:nth-of-type(4n+3) {
+    top: calc(5% + 55px + 2*40px + 2*15px + 15px)
+}
+
+.icon-button:nth-of-type(4n) {
+    top: calc(5% + 55px + 3*40px + 3*15px + 15px)
+}
+
+.top {
+    position: absolute;
+    display: block;
+    right: 4%;
+    height: calc((100% - 10px)/2);
+    width: 43.48%;
+    background-color: red;
+}
+
+.bottom {
+    position: absolute;
+    display: block;
+    right: 4%;
+    top: calc((100% - 10px)/2 + 10px);
+    height: calc((100% - 10px)/2);
+    width: 43.48%;
+    background-color: red;
+}
+
+.jacket {
+    position: absolute;
+    display: block;
+    left: 5%;
+    top: 10%;
+    height: calc((100% - 10px)/2);
+    width: 43.48%;
+    background-color: red;
+}
+
+.shoes {
+    position: absolute;
+    display: block;
+    top: calc(62% + 15px);
+    left: 9.5%;
+    height: 30%;
+    width: 34.5%;
+    background-color: red;
+}
+
+.main-clothes {
+    height: 37.2%;
+    background-color: black;
+}
+
+.icon-button {
+    stroke-width: 0px; 
+    background-color: #FAF5F4;
+    position: absolute;
+    display:block;
+    left: calc(85% + 5px);
+    border-radius: 25%;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    transition: background-color 0.2s;
+}
+
+.icon-button:hover {
+    background-color: #46A5DD;
+}
+
+.icon-button path {
+    fill: #39AFE5;
+    transition: fill 0.2s;
+}
+
+.icon-button:hover path {
+    fill: #FAF5F4;
+}
+/* 
+#clothes-select-header-text {
+    text-align: center;
+} */
+
+/* ----------------------------------------------- */
+/* ABOUT SECTION */
+/* ----------------------------------------------- */
+
+#about-menu {
+    outline: none;
 }

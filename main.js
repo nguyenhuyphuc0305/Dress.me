@@ -2,10 +2,10 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
-require('electron-reload')(__dirname,
-    { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
-);
-// require('electron-reload')(__dirname)
+// require('electron-reload')(path.join(__dirname, 'index.html'),
+//     { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
+// );
+require('electron-reload')(__dirname)
 
 let win
 
@@ -24,6 +24,8 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
+
+    win.setMenu(null)
 }
 
 app.on('ready', createWindow)

@@ -30,7 +30,7 @@
 	margin: 1% 0 1% 1.6%;
 }
 
-.col:nth-of-type(5n+1) { margin-left: 0; } /* all browsers except IE6 and lower */
+/* .col:nth-of-type(5n+1) { margin-left: 0; }  */
 
 
 /*  REMOVE MARGINS AS ALL GO FULL WIDTH AT 480 PIXELS */
@@ -78,7 +78,7 @@
 }
 
 .span-1-of-3 {
-	width: 32.26%; 
+	width: 31.15%; 
 }
 
 

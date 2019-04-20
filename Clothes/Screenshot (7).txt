@@ -1,6 +1,7 @@
-fall
-summer
 red
+summer
 winter
+green
+purple
+fall
 blue
-yellow
