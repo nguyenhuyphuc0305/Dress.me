@@ -15,7 +15,6 @@ window.dialog = window.dialog || {},
             import: function () {
                 dialog.showOpenDialog((imagePaths) => {
                     if (imagePaths === undefined) { return; }
-
                     ObjectDatabase.saveImagesAsDatabase(imagePaths)
                 })
             },
@@ -30,7 +29,6 @@ window.dialog = window.dialog || {},
             },
             showStoredImagesOnload: function () {
                 database = ObjectDatabase.loadDatabase()
-
                 if (database.length == 0) { return }
                 database.forEach(function (cloth) {
                     $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
@@ -56,6 +54,7 @@ window.dialog = window.dialog || {},
 
                     var tagList = fs.readFileSync(path.join('Clothes', event.target.id + '.txt')).toString().split("\n");
                     tagList.pop()
+                    $('span').css({ 'display': 'none' })
                     tagList.forEach(function (checkTag) {
                         $('span#' + checkTag).css({ 'display': 'block' });
                     });
