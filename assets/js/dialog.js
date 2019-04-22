@@ -13,26 +13,28 @@ window.dialog = window.dialog || {},
                 imgId: ''
             },
             import: function () {
-                dialog.showOpenDialog((imagePaths) => {
+                dialog.showOpenDialog({ properties: ['multiSelections'] }, (imagePaths) => {
                     if (imagePaths === undefined) { return; }
                     ObjectDatabase.saveImagesAsDatabase(imagePaths)
                 })
             },
             displayImages: function () {
                 database = ObjectDatabase.loadDatabase()
-                console.log(database)
                 $('.imported-img').remove()
                 if (database.length == 0) { return }
                 database.forEach(function (cloth) {
                     $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
                 })
+
             },
             showStoredImagesOnload: function () {
                 database = ObjectDatabase.loadDatabase()
                 if (database.length == 0) { return }
                 database.forEach(function (cloth) {
+                    console.log(cloth._imagePath)
                     $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
                 })
+
             },
             init: function () {
                 dialog.handler.showStoredImagesOnload();

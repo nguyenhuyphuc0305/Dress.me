@@ -55,6 +55,10 @@ a {
     background-color: #2383bc;
 }
 
+li {
+    list-style-type: none;
+}
+
 /* ----------------------------------------------- */
 /* SIDEBAR */
 /* ----------------------------------------------- */
@@ -111,6 +115,7 @@ a {
     -webkit-transition: color 0.2s, border-top 0.2s;
     transition: color 0.2s, border-top 0.2s;
 }
+
 
 #sidebar div ul a:hover {
     color:  #46A5DD;
