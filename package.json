@@ -4,9 +4,11 @@
   "description": "An outfit app",
   "main": "main.js",
   "dependencies": {
+    "async": "^2.6.2",
     "electron": "^4.0.8",
     "electron-reload": "^1.4.0",
-    "objecttagdatabase": "^1.2.0"
+    "objecttagdatabase": "^1.2.0",
+    "tedious": "^6.1.1"
   },
   "devDependencies": {},
   "scripts": {
