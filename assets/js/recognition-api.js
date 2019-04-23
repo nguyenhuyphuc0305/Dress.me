@@ -8,25 +8,31 @@ var visualRecognition = new VisualRecognitionV3({
     url: 'https://gateway.watsonplatform.net/visual-recognition/api'
 });
 
-var images_file = fs.createReadStream(path.join('Clothes', '40RR_16_JOSEPH_ABBOUD_HERITAGE_TAN_MAIN.zip'))
-var classifier_ids = ["Clothes_1971082994"];
-var threshold = 0.6;
 
-var params = {
-    images_file: images_file,
-    classifier_ids: classifier_ids,
-    threshold: threshold
-};
+function getData(zipPath) {
+    var images_file = fs.createReadStream(zipPath)
+    var classifier_ids = ["Clothes_1971082994"];
+    var threshold = 0.6;
 
-visualRecognition.classify(params, function (err, response) {
-    if (err) {
-        console.log(err);
-    } else {
-        for (var k in response.images) {
-            for (var i in response.images[k].classifiers[0].classes) {
-                console.log(response.images[k].classifiers[0].classes[i].class)
+    var params = {
+        images_file: images_file,
+        classifier_ids: classifier_ids,
+        threshold: threshold
+    };
+
+    visualRecognition.classify(params, function (err, response) {
+        if (err) {
+            console.log(err);
+        } else {
+            for (var k in response.images) {
+                for (var i in response.images[k].classifiers[0].classes) {
+                    console.log(response.images[k].classifiers[0].classes[i].class)
+                }
             }
         }
-    }
-});
+    });
+    return 0;
+}
 
+
+module.exports = { getData }
