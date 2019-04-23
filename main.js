@@ -2,9 +2,15 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
+<<<<<<< HEAD
 // require('electron-reload')(path.join(__dirname, 'index.html'),
 //     { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
 // );
+=======
+require('electron-reload')(path.join(__dirname, 'index.html'),
+    { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
+);
+>>>>>>> 961641a96c63f86da2479943f0bed31b0abc8ee9
 // require('electron-reload')(__dirname)
 
 let win
@@ -19,7 +25,7 @@ function createWindow() {
 
     win.loadFile('index.html')
 
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     win.on('closed', () => {
         win = null
