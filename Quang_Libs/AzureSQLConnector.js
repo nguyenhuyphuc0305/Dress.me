@@ -1,6 +1,10 @@
+var colors = require('colors'); //For Fun
+
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
+
+var Clothe = require('./recommendation').Clothe;
 
 // Create connection to database
 var config = {
@@ -33,23 +37,13 @@ connection.on('connect', function (err) {
 function queryDatabase() {
     console.log('Reading rows from the Table...');
 
-    var newUser = {
-        lastname: 'Luong',
-        firstname: 'Quang',
-        prefername: 'Q',
-        gender: 'M',
-        country: 'VN',
-        phone: '2673662795',
-        email: 'qdl24@drexel.edu'
-    }
-
-    Read()
+    Insert()
 }
 
 function Insert() {
     console.log("Inserting '" + "QUANG" + "' into Table...");
     var request = new Request(
-        "INSERT INTO dress_me_schema.customer (lastname, firstname, prefername, gender, country, phone, email) OUTPUT INSERTED.user_id VALUES (@lastname, @firstname, @prefername, @gender, @country, @phone, @email);",
+        "INSERT INTO dress_me_schema.customer (lastname, firstname, nickname, gender, country, phone, email) OUTPUT INSERTED.user_id VALUES (@lastname, @firstname, @nickname, @gender, @country, @phone, @email);",
         function (err, rowCount, rows) {
             if (err) {
                 console.log(err);
@@ -60,17 +54,51 @@ function Insert() {
             }
         }
     );
-    request.addParameter('lastname', TYPES.NVarChar, "Luong");
-    request.addParameter('firstname', TYPES.NVarChar, "Quang");
-    request.addParameter('prefername', TYPES.NVarChar, "Q");
+    request.addParameter('lastname', TYPES.NVarChar, "Testing");
+    request.addParameter('firstname', TYPES.NVarChar, "Sam");
+    request.addParameter('nickname', TYPES.NVarChar, "TS");
     request.addParameter('gender', TYPES.NVarChar, "M");
-    request.addParameter('country', TYPES.NVarChar, "VN");
-    request.addParameter('phone', TYPES.NVarChar, "2673662795");
-    request.addParameter('email', TYPES.NVarChar, "qdl24@drexel.edu");
+    request.addParameter('country', TYPES.NVarChar, "USA?");
+    request.addParameter('phone', TYPES.NVarChar, "***********");
+    request.addParameter('email', TYPES.NVarChar, "****@drexel.edu");
 
 
     // Execute SQL statement
     connection.execSql(request);
+}
+
+function registerNewUser(lastname, firstname, nickname, gender, country, phone, email) {
+    console.log("=========================".rainbow)
+    console.log(`Inserting ${firstname} into database...`.yellow)
+    var request = new Request(
+        "INSERT INTO dress_me_schema.customer (lastname, firstname, prefername, gender, country, phone, email) OUTPUT INSERTED.user_id VALUES (@lastname, @firstname, @prefername, @gender, @country, @phone, @email);",
+        function (err, rowCount, rows) {
+            if (err) {
+                console.log(`${err}`.red)
+            }
+            else {
+                console.log(`${rowCount} row(s) inserted`.green);
+                console.log("=========================".rainbow)
+            }
+        }
+    );
+    request.addParameter('lastname', TYPES.NVarChar, lastname);
+    request.addParameter('firstname', TYPES.NVarChar, firstname);
+    request.addParameter('prefername', TYPES.NVarChar, nickname);
+    request.addParameter('gender', TYPES.NVarChar, gender);
+    request.addParameter('country', TYPES.NVarChar, country);
+    request.addParameter('phone', TYPES.NVarChar, phone);
+    request.addParameter('email', TYPES.NVarChar, email);
+
+    // Execute SQL statement
+    connection.execSql(request);
+}
+
+function pushClothesToDatabase(allClothes) {
+    return new Promise(function (resolve) {
+        console.log("=========================".rainbow)
+        console.log(`Inserting ${allClothes.length} clothes into database...`.yellow)
+    })
 }
 
 function Read() {
@@ -105,3 +133,4 @@ function Read() {
 }
 
 //Tutorial: https://www.microsoft.com/en-us/sql-server/developer-get-started/node/mac/step/2.html
+module.exports = { connection }

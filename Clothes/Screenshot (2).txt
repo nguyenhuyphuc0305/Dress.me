@@ -3,3 +3,4 @@ orange
 indigo
 yellow
 green
+bot

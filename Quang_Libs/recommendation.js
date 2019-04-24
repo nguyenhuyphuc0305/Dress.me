@@ -235,3 +235,5 @@ function convertDatabaseToClasses(databasePath) {
 }
 
 helloworld()
+
+module.exports = {Clothe, convertDatabaseToClasses}
