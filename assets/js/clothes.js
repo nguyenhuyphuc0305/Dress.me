@@ -58,6 +58,7 @@ window.clothes = window.clothes || {},
 
             n(async function () {
                 clothes.handler.constants.clotheDatabase = await recommendation.helloworld()
+                console.log(clothes.handler.constants.clotheDatabase)
                 clothes.handler.init()
             })
     }(jQuery);
