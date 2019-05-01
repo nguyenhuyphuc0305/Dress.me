@@ -4,12 +4,18 @@ const path = require('path');
 const recommendation = require('../../Quang_Libs/recommendation')
 const ObjectDatabase = require('objecttagdatabase');
 
+var DatabaseWrapper = require('../../Tools/Database')
+
 window.dialog = window.dialog || {},
     function (n) {
         dialog.handler = {
             variables: {
                 imgId: '',
                 clotheDatabase: {}
+            },
+            djfjdfasf: async function() {
+                const a = await DatabaseWrapper.getAllClothesAndParseItIntoObjects()
+                console.log(a)
             },
             import: function () {
                 dialog.showOpenDialog({ properties: ['multiSelections'] }, (imagePaths) => {
@@ -81,7 +87,7 @@ window.dialog = window.dialog || {},
             init: function () {
                 dialog.handler.showStoredImagesOnload();
                 $('#import-btn').click(function () {
-                    dialog.handler.import()
+                    dialog.handler.djfjdfasf()
                 })
                 $('#display-btn').click(function () {
                     dialog.handler.displayImages()
