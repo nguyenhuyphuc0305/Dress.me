@@ -1,3 +1,5 @@
+const recommendation = require('../../Quang_Libs/recommendation')
+
 window.navigation = window.navigation || {},
     function (n) {
         navigation.menu = {
@@ -7,7 +9,8 @@ window.navigation = window.navigation || {},
                 startSectionMenuItem: '#welcome-menu',
                 startSection: '#welcome',
                 list1: ['#about-menu-display', '#welcome-menu-display', '#import-menu-display', '#clothes-menu-display'],
-                list2: ['#about-menu', '#welcome-menu', '#import-menu', '#clothes-menu']
+                list2: ['#about-menu', '#welcome-menu', '#import-menu', '#clothes-menu'],
+                clotheData: {}
             },
 
             importSectionsToDOM: function () {
@@ -21,12 +24,16 @@ window.navigation = window.navigation || {},
             },
 
             setMenuOnClickEvent: function () {
-                document.body.addEventListener('click', function (event) {
+                document.body.addEventListener('click', async function (event) {
                     if (event.target.dataset.section) {
                         navigation.menu.hideAllSections()
                         $('#' + event.target.id + '-display').css({
                             display: 'block'
                         });
+                        if (event.target.dataset.section == 'clothes') {
+                            var clotheData = await recommendation.helloworld()
+                            navigation.menu.constants.clotheData = clotheData
+                        }
                         for (i = 0; i < navigation.menu.constants.list2.length; i++) {
                             $(navigation.menu.constants.list2[i]).removeClass('current-page')
                         }
@@ -39,7 +46,7 @@ window.navigation = window.navigation || {},
                 $(navigation.menu.constants.startSectionMenuItem + '-display').css({
                     'display': 'block'
                 });
-                $('#welcome-menu').addClass('current-page');
+                $(navigation.menu.constants.startSectionMenuItem).addClass('current-page');
             },
 
             hideAllSections: function () {
@@ -74,3 +81,5 @@ window.navigation = window.navigation || {},
         })
 
     }(jQuery);
+
+module.exports = { navigation } 

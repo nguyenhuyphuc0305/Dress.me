@@ -246,6 +246,7 @@ li {
 
 .imported-img {
     height: 283.4px;
+    position: relative;
 }
 
 .imported-img:nth-of-type(5n+1) { margin-left: 0; }
@@ -275,6 +276,7 @@ li {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    position: relative;
 }
 
 #img-container {
@@ -284,6 +286,37 @@ li {
     width: 100%;
     left: 5%;
 }
+
+.top-container-import {
+    display: block;
+    position: relative;
+    overflow: auto;
+}
+
+.jacket-container-import {
+    display: block;
+    position: relative;
+    overflow: auto;
+}
+
+.bottom-container-import {
+    display: block;
+    position: relative;
+    overflow: auto;
+}
+
+.shoes-container-import {
+    display: block;
+    position: relative;
+    overflow: auto;
+}
+
+.other-container-import {
+    display: block;
+    position: relative;
+    overflow: auto;
+}
+
 
 /* ----------------------------------------------- */
 /* CLOTHES SECTION */
@@ -396,7 +429,7 @@ li {
     right: 4%;
     height: calc((100% - 10px)/2);
     width: 43.48%;
-    background-color: red;
+    background-color: rgba(136, 169, 184, 0.5);;
 }
 
 .bottom {
@@ -406,7 +439,7 @@ li {
     top: calc((100% - 10px)/2 + 10px);
     height: calc((100% - 10px)/2);
     width: 43.48%;
-    background-color: red;
+    background-color: rgba(136, 169, 184, 0.5);;
 }
 
 .jacket {
@@ -416,7 +449,7 @@ li {
     top: 10%;
     height: calc((100% - 10px)/2);
     width: 43.48%;
-    background-color: red;
+    background-color: rgba(136, 169, 184, 0.5);;
 }
 
 .shoes {
@@ -426,7 +459,7 @@ li {
     left: 9.5%;
     height: 30%;
     width: 34.5%;
-    background-color: red;
+    background-color: rgba(136, 169, 184, 0.5);;
 }
 
 .main-clothes {
@@ -454,15 +487,28 @@ li {
 .icon-button path {
     fill: #39AFE5;
     transition: fill 0.2s;
+    pointer-events: none;
 }
 
 .icon-button:hover path {
     fill: #FAF5F4;
 }
-/* 
+
+.current-one {
+    background-color: #46A5DD;
+}
+
+.current-one-path {
+    fill: #FAF5F4 !important;
+}
+
 #clothes-select-header-text {
     text-align: center;
-} */
+    margin: 0;
+    margin-top: 12px;
+    padding: 0;
+    font-size: 160%;
+}
 
 /* ----------------------------------------------- */
 /* ABOUT SECTION */

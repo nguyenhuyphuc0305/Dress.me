@@ -1,39 +1,81 @@
 const fs = require('fs');
 const { dialog } = require('electron').remote;
 const path = require('path');
-
+const recommendation = require('../../Quang_Libs/recommendation')
 const ObjectDatabase = require('objecttagdatabase');
-
-var database = []
 
 window.dialog = window.dialog || {},
     function (n) {
         dialog.handler = {
             variables: {
-                imgId: ''
+                imgId: '',
+                clotheDatabase: {}
             },
             import: function () {
                 dialog.showOpenDialog({ properties: ['multiSelections'] }, (imagePaths) => {
                     if (imagePaths === undefined) { return; }
                     ObjectDatabase.saveImagesAsDatabase(imagePaths)
                 })
-            },
-            displayImages: function () {
-                database = ObjectDatabase.loadDatabase()
-                $('.imported-img').remove()
-                if (database.length == 0) { return }
-                database.forEach(function (cloth) {
-                    $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
-                })
 
             },
-            showStoredImagesOnload: function () {
-                database = ObjectDatabase.loadDatabase()
-                if (database.length == 0) { return }
-                database.forEach(function (cloth) {
-                    console.log(cloth._imagePath)
-                    $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
-                })
+            displayImages: async function () {
+                var clotheDatabase = await recommendation.helloworld()
+                dialog.handler.variables.clotheDatabase = clotheDatabase
+                $('.imported-img').remove()
+                if (clotheDatabase.top.length != 0) {
+                    clotheDatabase.top.forEach(function (cloth) {
+                        $('.top-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.jacket.length != 0) {
+                    clotheDatabase.jacket.forEach(function (cloth) {
+                        $('.jacket-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.bottom.length != 0) {
+                    clotheDatabase.bottom.forEach(function (cloth) {
+                        $('.bottom-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.shoes.length != 0) {
+                    clotheDatabase.shoes.forEach(function (cloth) {
+                        $('.shoes-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.nottype.length != 0) {
+                    clotheDatabase.nottype.forEach(function (cloth) {
+                        $('.other-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+            },
+            showStoredImagesOnload: async function () {
+                var clotheDatabase = await recommendation.helloworld()
+                dialog.handler.variables.clotheDatabase = clotheDatabase
+                if (clotheDatabase.top.length != 0) {
+                    clotheDatabase.top.forEach(function (cloth) {
+                        $('.top-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.jacket.length != 0) {
+                    clotheDatabase.jacket.forEach(function (cloth) {
+                        $('.jacket-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.bottom.length != 0) {
+                    clotheDatabase.bottom.forEach(function (cloth) {
+                        $('.bottom-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.shoes.length != 0) {
+                    clotheDatabase.shoes.forEach(function (cloth) {
+                        $('.shoes-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
+                if (clotheDatabase.nottype.length != 0) {
+                    clotheDatabase.nottype.forEach(function (cloth) {
+                        $('.other-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
+                    })
+                }
 
             },
             init: function () {
@@ -83,3 +125,5 @@ window.dialog = window.dialog || {},
             dialog.handler.init();
         })
     }(jQuery);
+
+
