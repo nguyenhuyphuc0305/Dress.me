@@ -1,4 +1,4 @@
-const recommendation = require('../../Quang_Libs/recommendation')
+// const recommendation = require('../../Quang_Libs/recommendation')
 
 window.navigation = window.navigation || {},
     function (n) {
@@ -30,10 +30,11 @@ window.navigation = window.navigation || {},
                         $('#' + event.target.id + '-display').css({
                             display: 'block'
                         });
-                        if (event.target.dataset.section == 'clothes') {
-                            var clotheData = await recommendation.helloworld()
-                            navigation.menu.constants.clotheData = clotheData
-                        }
+                        //FIXME: 
+                        // if (event.target.dataset.section == 'clothes') {
+                        //     var clotheData = await recommendation.helloworld()
+                        //     navigation.menu.constants.clotheData = clotheData
+                        // }
                         for (i = 0; i < navigation.menu.constants.list2.length; i++) {
                             $(navigation.menu.constants.list2[i]).removeClass('current-page')
                         }

@@ -6,9 +6,7 @@
   "dependencies": {
     "archiver": "^3.0.0",
     "electron-reload": "^1.4.0",
-    "objecttagdatabase": "^1.2.0",
     "md5-file": "^4.0.0",
-    "firebase": "^5.11.0",
     "firebase-admin": "^7.3.0"
   },
   "scripts": {
@@ -18,6 +16,6 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "electron": "5.0.0"
+    "electron": "4.1.5"
   }
 }

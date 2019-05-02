@@ -6,8 +6,8 @@ class Clothe {
     static get Bottom() {
         return "bottom"
     }
-    static get Dress() {
-        return "dress"
+    static get Jacket() {
+        return "jacket"
     }
     static get Shoe() {
         return "shoe"

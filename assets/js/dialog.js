@@ -1,121 +1,81 @@
-const fs = require('fs');
 const { dialog } = require('electron').remote;
-const path = require('path');
-const recommendation = require('../../Quang_Libs/recommendation')
-const ObjectDatabase = require('objecttagdatabase');
 
 var DatabaseWrapper = require('../../Tools/Database')
+var SearchTool = require("../../Tools/Search")
+var Clothe = require("../../Models/Clothe").Clothe
 
 window.dialog = window.dialog || {},
     function (n) {
         dialog.handler = {
             variables: {
-                imgId: '',
+                selectedImageID: '',
                 clotheDatabase: {}
             },
-            importNewImages: function() {
+            importNewImages: function () {
                 dialog.showOpenDialog({
                     properties: ['openFile', 'multiSelections'],
                     filters: [{
                         name: "Images",
                         extensions: ["jpg", "png"]
                     }]
-                }, async function(imagePaths) {
+                }, function (imagePaths) {
                     // console.log(imagePaths)
-                    if (imagePaths.length > 0) {
-                        await DatabaseWrapper.handleImagesInAndUpdateDatabase(imagePaths)
+                    if (imagePaths != undefined) {
+                        DatabaseWrapper.handleImagesInAndUpdateDatabase(imagePaths)
+                            .then(() => {
+                                console.log("Successfully imported and updated database.")
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
                     }
                 })
             },
-            displayAllImagesOnDatabase: function() {
+            displayAllImagesOnDatabase: function () {
+                $('.imported-img').remove()
                 DatabaseWrapper.getAllClothesAndParseItIntoObjects()
-                    .then(database => {
-                        $('.imported-img').remove()
-                        if (database.length == 0) { return }
-                        database.forEach(function(clothe) {
-                            $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageName.split('.')[0] + "' src='" + clothe.imagePath + "'>")
+                    .then(async function (database) {
+                        // console.log(database)
+                        const allTops = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Top, database)
+                        const allJackets = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Jacket, database)
+                        const allBots = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Bottom, database)
+                        const allShoes = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Shoe, database)
+                        const noneTypes = await SearchTool.searchClothesWithTagsInDatabase(null, database)
+                        // console.log(noneTypes)
+                        allTops.forEach(function (clothe) {
+                            $('.top-container-import').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                        })
+                        allJackets.forEach(function (clothe) {
+                            $('.jacket-container-import').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                        })
+                        allBots.forEach(function (clothe) {
+                            $('.bottom-container-import').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                        })
+                        allShoes.forEach(function (clothe) {
+                            $('.shoes-container-import').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                        })
+                        noneTypes.forEach(function (clothe) {
+                            $('.other-container-import').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
                         })
                     })
                     .catch(err => {
                         console.log(err)
                     })
             },
-            import: function () {
-                dialog.showOpenDialog({ properties: ['multiSelections'] }, (imagePaths) => {
-                    if (imagePaths === undefined) { return; }
-                    ObjectDatabase.saveImagesAsDatabase(imagePaths)
+            dismissContextMenu: function() {
+                $('.tags-container').css({
+                    'display': 'none'
                 })
-
-            },
-            displayImages: async function () {
-                var clotheDatabase = await recommendation.helloworld()
-                dialog.handler.variables.clotheDatabase = clotheDatabase
-                $('.imported-img').remove()
-                if (clotheDatabase.top.length != 0) {
-                    clotheDatabase.top.forEach(function (cloth) {
-                        $('.top-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.jacket.length != 0) {
-                    clotheDatabase.jacket.forEach(function (cloth) {
-                        $('.jacket-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.bottom.length != 0) {
-                    clotheDatabase.bottom.forEach(function (cloth) {
-                        $('.bottom-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.shoes.length != 0) {
-                    clotheDatabase.shoes.forEach(function (cloth) {
-                        $('.shoes-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.nottype.length != 0) {
-                    clotheDatabase.nottype.forEach(function (cloth) {
-                        $('.other-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-            },
-            showStoredImagesOnload: async function () {
-                var clotheDatabase = await recommendation.helloworld()
-                dialog.handler.variables.clotheDatabase = clotheDatabase
-                if (clotheDatabase.top.length != 0) {
-                    clotheDatabase.top.forEach(function (cloth) {
-                        $('.top-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.jacket.length != 0) {
-                    clotheDatabase.jacket.forEach(function (cloth) {
-                        $('.jacket-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.bottom.length != 0) {
-                    clotheDatabase.bottom.forEach(function (cloth) {
-                        $('.bottom-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.shoes.length != 0) {
-                    clotheDatabase.shoes.forEach(function (cloth) {
-                        $('.shoes-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-                if (clotheDatabase.nottype.length != 0) {
-                    clotheDatabase.nottype.forEach(function (cloth) {
-                        $('.other-container-import').append("<img class='col span-1-of-5 imported-img' id='" + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
-
             },
             init: function () {
-                dialog.handler.showStoredImagesOnload();
+                dialog.handler.displayAllImagesOnDatabase();
                 $('#import-btn').click(function () {
-                    dialog.handler.import()
+                    dialog.handler.importNewImages()
                 })
                 $('#display-btn').click(function () {
-                    dialog.handler.displayImages()
+                    dialog.handler.displayAllImagesOnDatabase()
                 })
-                $('#img-container').on('contextmenu', '.imported-img', function (event) {
+                $('#img-container').on('contextmenu', '.imported-img', async function (event) {
                     event.preventDefault();
                     $('.tags-container').css({
                         'display': 'block',
@@ -123,29 +83,33 @@ window.dialog = window.dialog || {},
                         'top': event.pageY
                     })
 
-                    dialog.handler.variables.imgId = event.target.id;
+                    dialog.handler.variables.selectedImageID = event.target.id;
 
-                    var tagList = fs.readFileSync(path.join('Clothes', event.target.id + '.txt')).toString().split("\n");
-                    tagList.pop()
+                    var savedTags = await DatabaseWrapper.readTagsForImageWithID(event.target.id)
                     $('span').css({ 'display': 'none' })
-                    tagList.forEach(function (checkTag) {
-                        $('span#' + checkTag).css({ 'display': 'block' });
-                    });
-
+                    savedTags.forEach(function(savedTag) {
+                        //Basically check all tags that are previously selected
+                        $('span#' + savedTag).css({ 'display': 'block' });
+                    })
                 })
-                $('#context-menu ul li').click(function (event) {
-                    const fileName = dialog.handler.variables.imgId;
-                    const tag = event.target.id
-                    tagList = ObjectDatabase.addOrDeleteTagFromImage(fileName, tag)
+                $('#context-menu ul li').click(async function (event) {
+                    const selectedClotheID = dialog.handler.variables.selectedImageID;
+                    const selectedTag = event.target.id
+                    await DatabaseWrapper.addOrDeleteTagFromImageWithID(selectedClotheID, selectedTag)
+                    .then(() => {
+                        console.log("Successfully save new tags settings.")
+                    })
                     $('.icon-li').css({ 'display': 'none' });
-                    tagList.forEach(function (checkTag) {
-                        $('span#' + checkTag).css({ 'display': 'block' });
-                    });
+                    var savedTags = await DatabaseWrapper.readTagsForImageWithID(selectedClotheID)
+                    savedTags.forEach(function(savedTag) {
+                        //Basically check all tags that are previously selected
+                        $('span#' + savedTag).css({ 'display': 'block' });
+                    })
+                    // dialog.handler.displayAllImagesOnDatabase()
+                    // dialog.handler.dismissContextMenu()
                 })
                 $('#import-menu-display').click(function () {
-                    $('.tags-container').css({
-                        'display': 'none'
-                    })
+                    dialog.handler.dismissContextMenu()
                 })
             }
         };

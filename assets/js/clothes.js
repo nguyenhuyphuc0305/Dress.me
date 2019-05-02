@@ -1,63 +1,83 @@
-const path = require('path');
-const recommendation = require('../../Quang_Libs/recommendation')
+var DatabaseWrapper = require('../../Tools/Database')
+var SearchTool = require("../../Tools/Search")
+var Clothe = require("../../Models/Clothe").Clothe
+var RecommendTool = require("../../Tools/Recommend")
 
 window.clothes = window.clothes || {},
     function (n) {
         clothes.handler = {
             constants: {
-                clotheDatabase: {},
+                clothesDatabase: [],
                 buttonList: ['icon-button-top', 'icon-button-jacket', 'icon-button-bottom', 'icon-button-shoes'],
                 current: ''
             },
-            showTopOnLoad: function () {
+            displayRecommendation: async function () {
+                const recommendation = await RecommendTool.recommendTodayOutfit(clothes.handler.constants.clothesDatabase)
+                console.log(recommendation)
+
+                $(".top").remove()
+                $('.clothes-display-container').append("<img class='" + "top" + "' src='" + recommendation.top.imagePath + "'>")
+
+                $(".jacket").remove()
+                $('.clothes-display-container').append("<img class='" + "jacket" + "' src='" + recommendation.jacket.imagePath + "'>")
+
+                $(".bottom").remove()
+                $('.clothes-display-container').append("<img class='" + "bottom" + "' src='" + recommendation.bottom.imagePath + "'>")
+
+                $(".shoes").remove()
+                $('.clothes-display-container').append("<img class='" + "shoes" + "' src='" + recommendation.shoe.imagePath + "'>")
+            },
+            showTopOnLoad: async function () {
                 clothes.handler.constants.current = 'top'
                 $('.main-clothes').remove()
-                if (this.constants.clotheDatabase.top.length != 0) {
-                    this.constants.clotheDatabase.top.forEach(function (cloth) {
-                        $('.below-below-clothes-select-header').append("<img class='col span-1-of-3 main-clothes' id='main." + path.parse(cloth).name + "' src='" + cloth + "'>")
-                    })
-                }
+
+                const allTops = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Top, clothes.handler.constants.clothesDatabase)
+                allTops.forEach(function (clothe) {
+                    $('.below-below-clothes-select-header').append("<img class='col span-1-of-3 main-clothes' id='main." + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                })
+
                 $('#icon-button-top').addClass('current-one')
                 $('#icon-button-top path').addClass('current-one-path')
                 $('#clothes-select-header-text').append('Top')
             },
             setTypeOnClick: function () {
-                $('.clothes-select-box').click(function (event) {
-                    var currentOne = event.target.id.split('-')[2]
-                    if (currentOne !== undefined) {
-                        clothes.handler.constants.current = currentOne
+                $('.clothes-select-box').click(async function (event) {
+                    var selectedTag = event.target.id.split('-')[2]
+                    if (selectedTag !== undefined) {
+                        clothes.handler.constants.current = selectedTag
                     }
-                    console.log(currentOne)
-                    console.log(clothes.handler.constants.current)
+                    // console.log(selectedTag)
+                    // console.log(clothes.handler.constants.current)
                     if (clothes.handler.constants.buttonList.includes(event.target.id)) {
                         $('.main-clothes').remove()
-                        if (clothes.handler.constants.clotheDatabase[currentOne].length != 0) {
-                            clothes.handler.constants.clotheDatabase[currentOne].forEach(function (cloth) {
-                                $('.below-below-clothes-select-header').append("<img class='col span-1-of-3 main-clothes' id='main." + path.parse(cloth).name + "' src='" + cloth + "'>")
-                            })
-                        }
+
+                        const allClothesWithSelectedTags = await SearchTool.searchClothesWithTagsInDatabase(selectedTag, clothes.handler.constants.clothesDatabase)
+                        allClothesWithSelectedTags.forEach(function (clothe) {
+                            $('.below-below-clothes-select-header').append("<img class='col span-1-of-3 main-clothes' id='main." + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                        })
                         $('#clothes-select-header-text').text(clothes.handler.constants.current.charAt(0).toUpperCase() + clothes.handler.constants.current.slice(1))
                         $('.icon-button').removeClass('current-one')
                         $('.icon-button path').removeClass('current-one-path')
-                        $('#icon-button-' + currentOne).addClass('current-one')
-                        $('#icon-button-' + currentOne + ' path').addClass('current-one-path')
+                        $('#icon-button-' + selectedTag).addClass('current-one')
+                        $('#icon-button-' + selectedTag + ' path').addClass('current-one-path')
                     }
                     $('.main-clothes').click(function (event) {
-                        console.log(currentOne)
-                        console.log(clothes.handler.constants.current)
+                        // console.log(selectedTag)
+                        // console.log(clothes.handler.constants.current)
                         $('.' + clothes.handler.constants.current).remove()
                         $('.clothes-display-container').append("<img class='" + clothes.handler.constants.current + "' src='" + event.target.src + "'>")
                     })
                 })
             },
             init: function () {
+                this.displayRecommendation()
                 this.showTopOnLoad()
                 this.setTypeOnClick()
             }
         },
 
             n(async function () {
-                clothes.handler.constants.clotheDatabase = await recommendation.helloworld()
+                clothes.handler.constants.clothesDatabase = await DatabaseWrapper.getAllClothesAndParseItIntoObjects()
                 clothes.handler.init()
             })
     }(jQuery);

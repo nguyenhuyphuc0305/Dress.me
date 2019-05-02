@@ -3,30 +3,34 @@ var WeatherTool = require('./Weather')
 var SearchTool = require('./Search')
 
 class Recommendation {
-    constructor(top, bot, shoe) {
+    constructor(top, jacket, bottom, shoe) {
         this.top = top
-        this.bot = bot
+        this.jacket = jacket
+        this.bottom = bottom
         this.shoe = shoe
     }
 }
 
-function recommendTodayOutfit() {
+function recommendTodayOutfit(clotheDatabase) {
     return new Promise(async function(resolve) {
         //Get weather first
         const temperature = await WeatherTool.getWeatherForZip(19104, "imperial")
 
-        var allTops = await SearchTool.searchClothesWithTags(Clothe.Top)
-        var allBots = await SearchTool.searchClothesWithTags(Clothe.Bottom)
-        var allShoes = await SearchTool.searchClothesWithTags(Clothe.Shoe)
+        var allTops = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Top, clotheDatabase)
+        var allJackets = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Jacket, clotheDatabase)
+        var allBots = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Bottom, clotheDatabase)
+        var allShoes = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Shoe, clotheDatabase)
 
-        const newRecommendation = new Recommendation(allTops[0], allBots[0], allShoes[0])
+        const newRecommendation = new Recommendation(allTops[0], allJackets[0], allBots[0], allShoes[0])
         resolve(newRecommendation)
     })
 }
 
-async function main() {
-    const a = await recommendTodayOutfit()
-    console.log(a)
-}
+module.exports = {recommendTodayOutfit}
 
-main()
+// async function main() {
+//     const a = await recommendTodayOutfit()
+//     console.log(a)
+// }
+
+// main()

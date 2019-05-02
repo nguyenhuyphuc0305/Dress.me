@@ -77,9 +77,9 @@ function handleImagesInAndUpdateDatabase(imagePaths) {
     })
 }
 
-function addOrDeleteTagFromImage(designatedClothe, tagName) {
+function addOrDeleteTagFromImageWithID(clotheID, tagName) {
     return new Promise(function(resolve) {
-        db.collection('clothes').doc(designatedClothe.imageID).get()
+        db.collection('clothes').doc(clotheID).get()
             .then(doc => {
                 if (!doc.exists) {
                     console.log("No image found")
@@ -92,7 +92,7 @@ function addOrDeleteTagFromImage(designatedClothe, tagName) {
                         savedTags.push(tagName)
                     }
                     savedTags = [...new Set(savedTags)]
-                    db.collection('clothes').doc(designatedClothe.imageID).update({
+                    db.collection('clothes').doc(clotheID).update({
                             tags: savedTags
                         })
                         .then(() => {
@@ -106,9 +106,9 @@ function addOrDeleteTagFromImage(designatedClothe, tagName) {
     })
 }
 
-function readTagsForImage(designatedClothe) {
+function readTagsForImageWithID(clotheID) {
     return new Promise(function(resolve) {
-        db.collection('clothes').doc(designatedClothe.imageID).get()
+        db.collection('clothes').doc(clotheID).get()
             .then(doc => {
                 if (!doc.exists) {
                     console.log("No image found")
@@ -157,4 +157,4 @@ async function main() {
 
 // main()
 
-module.exports = { handleImagesInAndUpdateDatabase, addOrDeleteTagFromImage, readTagsForImage, getAllClothesAndParseItIntoObjects }
+module.exports = { handleImagesInAndUpdateDatabase, addOrDeleteTagFromImageWithID, readTagsForImageWithID, getAllClothesAndParseItIntoObjects }
