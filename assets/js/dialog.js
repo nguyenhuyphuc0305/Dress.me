@@ -1,48 +1,63 @@
+//npm rebuild --runtime=electron --target=2.0.11
+
 const fs = require('fs');
 const { dialog } = require('electron').remote;
 const path = require('path');
 
-const ObjectDatabase = require('objecttagdatabase');
+// const ObjectDatabase = require('objecttagdatabase');
+var DatabaseWrapper = require('../../DevelopmentMode/Database')
 
 var database = []
 
 window.dialog = window.dialog || {},
-    function (n) {
+    async function(n) {
         dialog.handler = {
             variables: {
                 imgId: ''
             },
-            import: function () {
-                dialog.showOpenDialog((imagePaths) => {
-                    if (imagePaths === undefined) { return; }
-                    ObjectDatabase.saveImagesAsDatabase(imagePaths)
+            importNewImages: function() {
+                dialog.showOpenDialog({
+                    properties: ['openFile', 'multiSelections'],
+                    filters: [{
+                        name: "Images",
+                        extensions: ["jpg", "png"]
+                    }]
+                }, async function(imagePaths) {
+                    // console.log(imagePaths)
+                    if (imagePaths.length > 0) {
+                        await DatabaseWrapper.handleImagesInAndUpdateDatabase(imagePaths)
+                    }
                 })
             },
-            displayImages: function () {
+            displayAllImagesOnDatabase: function() {
+                DatabaseWrapper.getAllClothesAndParseItIntoObjects()
+                    .then(database => {
+                        $('.imported-img').remove()
+                        if (database.length == 0) { return }
+                        database.forEach(function(clothe) {
+                            $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageName.split('.')[0] + "' src='" + clothe.imagePath + "'>")
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            },
+            showStoredImagesOnload: function() {
                 database = ObjectDatabase.loadDatabase()
-                console.log(database)
-                $('.imported-img').remove()
                 if (database.length == 0) { return }
-                database.forEach(function (cloth) {
+                database.forEach(function(cloth) {
                     $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
                 })
             },
-            showStoredImagesOnload: function () {
-                database = ObjectDatabase.loadDatabase()
-                if (database.length == 0) { return }
-                database.forEach(function (cloth) {
-                    $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + path.basename(cloth._imagePath).split('.')[0] + "' src='" + cloth._imagePath + "'>")
+            init: function() {
+                // dialog.handler.showStoredImagesOnload();
+                $('#import-btn').click(async function() {
+                    dialog.handler.importNewImages()
                 })
-            },
-            init: function () {
-                dialog.handler.showStoredImagesOnload();
-                $('#import-btn').click(function () {
-                    dialog.handler.import()
+                $('#display-btn').click(async function() {
+                    dialog.handler.displayAllImagesOnDatabase()
                 })
-                $('#display-btn').click(function () {
-                    dialog.handler.displayImages()
-                })
-                $('#img-container').on('contextmenu', '.imported-img', function (event) {
+                $('#img-container').on('contextmenu', '.imported-img', function(event) {
                     event.preventDefault();
                     $('.tags-container').css({
                         'display': 'block',
@@ -55,21 +70,21 @@ window.dialog = window.dialog || {},
                     var tagList = fs.readFileSync(path.join('Clothes', event.target.id + '.txt')).toString().split("\n");
                     tagList.pop()
                     $('span').css({ 'display': 'none' })
-                    tagList.forEach(function (checkTag) {
+                    tagList.forEach(function(checkTag) {
                         $('span#' + checkTag).css({ 'display': 'block' });
                     });
 
                 })
-                $('#context-menu ul li').click(function (event) {
+                $('#context-menu ul li').click(function(event) {
                     const fileName = dialog.handler.variables.imgId;
                     const tag = event.target.id
                     tagList = ObjectDatabase.addOrDeleteTagFromImage(fileName, tag)
                     $('.icon-li').css({ 'display': 'none' });
-                    tagList.forEach(function (checkTag) {
+                    tagList.forEach(function(checkTag) {
                         $('span#' + checkTag).css({ 'display': 'block' });
                     });
                 })
-                $('#import-menu-display').click(function () {
+                $('#import-menu-display').click(function() {
                     $('.tags-container').css({
                         'display': 'none'
                     })
@@ -77,7 +92,7 @@ window.dialog = window.dialog || {},
             }
         };
 
-        n(function () {
+        n(function() {
             dialog.handler.init();
         })
     }(jQuery);

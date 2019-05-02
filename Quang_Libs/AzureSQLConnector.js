@@ -15,8 +15,7 @@ var config = {
             userName: 'dressmeteam', // update me
             password: '#teamAsian47' // update me
         }
-    },
-    options: {
+    },    options: {
         database: 'DressMeDatabase',
         encrypt: true
     }

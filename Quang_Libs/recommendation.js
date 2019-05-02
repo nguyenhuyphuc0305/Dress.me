@@ -2,96 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var WeatherTool = require('../Quang_Libs/weather')
 
-class Clothe {
-
-    //For types
-    //#region 
-    static get Top() {
-        return "top"
-    }
-    static get Bottom() {
-        return "bot"
-    }
-    static get Dress() {
-        return "dress"
-    }
-    static get Shoe() {
-        return "shoe"
-    }
-    //#endregion
-
-    //For colors
-    //#region 
-    static get Black() {
-        return 'black'
-    }
-    static get Brown() {
-        return 'brown'
-    }
-    static get Blue() {
-        return 'blue'
-    }
-    static get Green() {
-        return 'green'
-    }
-    static get Purple() {
-        return 'purple'
-    }
-    static get Red() {
-        return 'red'
-    }
-    static get Yellow() {
-        return 'yellow'
-    }
-    static get White() {
-        return 'white'
-    }
-    static get Pink() {
-        return 'pink'
-    }
-    static get Orange() {
-        return 'orange'
-    }
-    static get Gray() {
-        return 'gray'
-    }
-    //#endregion
-
-    //For conditions
-    //#region 
-    static get Sunny() {
-        return 'sunny'
-    }
-    static get Chilly() {
-        return 'chilly'
-    }
-    static get Warm() {
-        return 'warm'
-    }
-    static get Cold() {
-        return 'cold'
-    }
-    //#endregion
-
-    //For abilities
-    //#region 
-    static get Waterproof() {
-        return "waterproof"
-    }
-    static get Snowproof() {
-        return "snowproof"
-    }
-    //#endregion
-
-    constructor(imagePath, type, colors = [], suitableConditions = [], abilities = []) {
-        this.imagePath = imagePath
-        this.type = type
-        this.colors = colors
-        this.suitableConditions = suitableConditions
-        this.abilities = abilities
-    }
-}
-
 class Recommendation {
     constructor(top, bot, jacket, shoe, dress) {
         this.top = top
@@ -171,69 +81,69 @@ function getClothesWithTags(searchString) {
     })
 }
 
-function convertDatabaseToClasses(databasePath) {
-    return new Promise(resolve => {
-        const tempPath = path.join(__dirname, "..", databasePath)
-        var result = []
-        fs.readdir(tempPath, function (err, files) {
-            if (err != undefined) { console.log("Error loading database") }
-            files.forEach(function (file, index) {
-                //Only accept png or jpeg
-                if (path.parse(file).ext != ".png" && path.parse(file).ext != ".jpg" && path.parse(file).ext != ".jpeg") {
-                    return
-                }
-                const filePath = path.join(__dirname, "..", databasePath, file)
-                const tagPath = path.join(__dirname, "..", databasePath, path.parse(file).name) + ".txt"
-                // console.log(filePath)
-                // console.log(tagPath)
+// function convertDatabaseToClasses(databasePath) {
+//     return new Promise(resolve => {
+//         const tempPath = path.join(__dirname, "..", databasePath)
+//         var result = []
+//         fs.readdir(tempPath, function (err, files) {
+//             if (err != undefined) { console.log("Error loading database") }
+//             files.forEach(function (file, index) {
+//                 //Only accept png or jpeg
+//                 if (path.parse(file).ext != ".png" && path.parse(file).ext != ".jpg" && path.parse(file).ext != ".jpeg") {
+//                     return
+//                 }
+//                 const filePath = path.join(__dirname, "..", databasePath, file)
+//                 const tagPath = path.join(__dirname, "..", databasePath, path.parse(file).name) + ".txt"
+//                 // console.log(filePath)
+//                 // console.log(tagPath)
 
-                var tags = fs.readFileSync(tagPath).toString().split("\n");
-                tags = tags.filter(v => v != '');
-                // console.log(tags)
+//                 var tags = fs.readFileSync(tagPath).toString().split("\n");
+//                 tags = tags.filter(v => v != '');
+//                 // console.log(tags)
 
-                var type = ""
-                var colors = []
-                var suitableConditions = []
-                var abilities = []
+//                 var type = ""
+//                 var colors = []
+//                 var suitableConditions = []
+//                 var abilities = []
 
-                tags.forEach(function (tag, index) {
-                    //Handle type
-                    if (tag.toLowerCase() == Clothe.Bottom) { type = Clothe.Bottom }
-                    else if (tag.toLowerCase() == Clothe.Top) { type = Clothe.Top }
-                    else if (tag.toLowerCase() == Clothe.Dress) { type = Clothe.Dress }
-                    else if (tag.toLowerCase() == Clothe.Shoe) { type = Clothe.Shoe }
+//                 tags.forEach(function (tag, index) {
+//                     //Handle type
+//                     if (tag.toLowerCase() == Clothe.Bottom) { type = Clothe.Bottom }
+//                     else if (tag.toLowerCase() == Clothe.Top) { type = Clothe.Top }
+//                     else if (tag.toLowerCase() == Clothe.Dress) { type = Clothe.Dress }
+//                     else if (tag.toLowerCase() == Clothe.Shoe) { type = Clothe.Shoe }
 
-                    //Handle colors
-                    if (tag.toLowerCase() == Clothe.Black) { colors.push(Clothe.Black) }
-                    else if (tag.toLowerCase() == Clothe.Brown) { colors.push(Clothe.Brown) }
-                    else if (tag.toLowerCase() == Clothe.Blue) { colors.push(Clothe.Blue) }
-                    else if (tag.toLowerCase() == Clothe.Green) { colors.push(Clothe.Green) }
-                    else if (tag.toLowerCase() == Clothe.Purple) { colors.push(Clothe.Purple) }
-                    else if (tag.toLowerCase() == Clothe.Red) { colors.push(Clothe.Red) }
-                    else if (tag.toLowerCase() == Clothe.Yellow) { colors.push(Clothe.Yellow) }
-                    else if (tag.toLowerCase() == Clothe.White) { colors.push(Clothe.White) }
-                    else if (tag.toLowerCase() == Clothe.Pink) { colors.push(Clothe.Pink) }
-                    else if (tag.toLowerCase() == Clothe.Orange) { colors.push(Clothe.Orange) }
-                    else if (tag.toLowerCase() == Clothe.Gray) { colors.push(Clothe.Gray) }
+//                     //Handle colors
+//                     if (tag.toLowerCase() == Clothe.Black) { colors.push(Clothe.Black) }
+//                     else if (tag.toLowerCase() == Clothe.Brown) { colors.push(Clothe.Brown) }
+//                     else if (tag.toLowerCase() == Clothe.Blue) { colors.push(Clothe.Blue) }
+//                     else if (tag.toLowerCase() == Clothe.Green) { colors.push(Clothe.Green) }
+//                     else if (tag.toLowerCase() == Clothe.Purple) { colors.push(Clothe.Purple) }
+//                     else if (tag.toLowerCase() == Clothe.Red) { colors.push(Clothe.Red) }
+//                     else if (tag.toLowerCase() == Clothe.Yellow) { colors.push(Clothe.Yellow) }
+//                     else if (tag.toLowerCase() == Clothe.White) { colors.push(Clothe.White) }
+//                     else if (tag.toLowerCase() == Clothe.Pink) { colors.push(Clothe.Pink) }
+//                     else if (tag.toLowerCase() == Clothe.Orange) { colors.push(Clothe.Orange) }
+//                     else if (tag.toLowerCase() == Clothe.Gray) { colors.push(Clothe.Gray) }
 
-                    //Handle conditions
-                    if (tag.toLowerCase() == Clothe.Sunny) { suitableConditions.push(Clothe.Sunny) }
-                    else if (tag.toLowerCase() == Clothe.Chilly) { suitableConditions.push(Clothe.Chilly) }
-                    else if (tag.toLowerCase() == Clothe.Warm) { suitableConditions.push(Clothe.Warm) }
-                    else if (tag.toLowerCase() == Clothe.Cold) { suitableConditions.push(Clothe.Cold) }
+//                     //Handle conditions
+//                     if (tag.toLowerCase() == Clothe.Sunny) { suitableConditions.push(Clothe.Sunny) }
+//                     else if (tag.toLowerCase() == Clothe.Chilly) { suitableConditions.push(Clothe.Chilly) }
+//                     else if (tag.toLowerCase() == Clothe.Warm) { suitableConditions.push(Clothe.Warm) }
+//                     else if (tag.toLowerCase() == Clothe.Cold) { suitableConditions.push(Clothe.Cold) }
 
-                    //Handle abilities
-                    if (tag.toLowerCase() == Clothe.Waterproof) { abilities.push(Clothe.Waterproof) }
-                    else if (tag.toLowerCase() == Clothe.Snowproof) { abilities.push(Clothe.Snowproof) }
-                })
-                const newClothe = new Clothe(filePath, type, colors, suitableConditions, abilities)
-                result.push(newClothe)
-            })
-            resolve(result)
-        })
-    })
-}
+//                     //Handle abilities
+//                     if (tag.toLowerCase() == Clothe.Waterproof) { abilities.push(Clothe.Waterproof) }
+//                     else if (tag.toLowerCase() == Clothe.Snowproof) { abilities.push(Clothe.Snowproof) }
+//                 })
+//                 const newClothe = new Clothe(filePath, type, colors, suitableConditions, abilities)
+//                 result.push(newClothe)
+//             })
+//             resolve(result)
+//         })
+//     })
+// }
 
 helloworld()
 
-module.exports = {Clothe, convertDatabaseToClasses}
+module.exports = {convertDatabaseToClasses}

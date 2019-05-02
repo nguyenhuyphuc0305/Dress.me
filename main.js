@@ -2,9 +2,7 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
-require('electron-reload')(path.join(__dirname, 'index.html'),
-    { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
-);
+require('electron-reload')(path.join(__dirname, 'index.html'), { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] });
 // require('electron-reload')(__dirname)
 
 let win
@@ -14,7 +12,7 @@ function createWindow() {
         width: 1281,
         height: 800,
         //FIX ME QUANG: add icons for mac/windows/Linux. This is just temporary
-        icon: path.join(__dirname, 'assets/icons/png/icon_64x64.png')
+        // icon: path.join(__dirname, 'assets/icons/png/icon_64x64.png')
     })
 
     win.loadFile('index.html')
