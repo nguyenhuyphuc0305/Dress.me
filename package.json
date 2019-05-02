@@ -6,8 +6,9 @@
   "dependencies": {
     "archiver": "^3.0.0",
     "electron-reload": "^1.4.0",
-    "md5-file": "^4.0.0",
-    "firebase-admin": "^7.3.0"
+    "firebase-admin": "^7.3.0",
+    "jquery": "^3.4.1",
+    "md5-file": "^4.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
