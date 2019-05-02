@@ -61,3 +61,5 @@ typings/
 .next
 
 ServiceAccountKey.json
+
+.DS_Store
