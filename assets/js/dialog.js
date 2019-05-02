@@ -13,9 +13,32 @@ window.dialog = window.dialog || {},
                 imgId: '',
                 clotheDatabase: {}
             },
-            djfjdfasf: async function() {
-                const a = await DatabaseWrapper.getAllClothesAndParseItIntoObjects()
-                console.log(a)
+            importNewImages: function() {
+                dialog.showOpenDialog({
+                    properties: ['openFile', 'multiSelections'],
+                    filters: [{
+                        name: "Images",
+                        extensions: ["jpg", "png"]
+                    }]
+                }, async function(imagePaths) {
+                    // console.log(imagePaths)
+                    if (imagePaths.length > 0) {
+                        await DatabaseWrapper.handleImagesInAndUpdateDatabase(imagePaths)
+                    }
+                })
+            },
+            displayAllImagesOnDatabase: function() {
+                DatabaseWrapper.getAllClothesAndParseItIntoObjects()
+                    .then(database => {
+                        $('.imported-img').remove()
+                        if (database.length == 0) { return }
+                        database.forEach(function(clothe) {
+                            $('#img-container').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageName.split('.')[0] + "' src='" + clothe.imagePath + "'>")
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             },
             import: function () {
                 dialog.showOpenDialog({ properties: ['multiSelections'] }, (imagePaths) => {
@@ -87,7 +110,7 @@ window.dialog = window.dialog || {},
             init: function () {
                 dialog.handler.showStoredImagesOnload();
                 $('#import-btn').click(function () {
-                    dialog.handler.djfjdfasf()
+                    dialog.handler.import()
                 })
                 $('#display-btn').click(function () {
                     dialog.handler.displayImages()
