@@ -146,6 +146,10 @@ function getAllClothesAndParseItIntoObjects() {
     })
 }
 
+function deleteClotheWithImageID(clotheID) {
+    db.collection('clothes').doc(clotheID).delete()
+}
+
 async function main() {
     // searchClothesWithTags(['red'])
     const test = await handleImagesInAndUpdateDatabase(["/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/1.png", "/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/2.png"])
@@ -157,4 +161,4 @@ async function main() {
 
 // main()
 
-module.exports = { handleImagesInAndUpdateDatabase, addOrDeleteTagFromImageWithID, readTagsForImageWithID, getAllClothesAndParseItIntoObjects }
+module.exports = { handleImagesInAndUpdateDatabase, addOrDeleteTagFromImageWithID, readTagsForImageWithID, getAllClothesAndParseItIntoObjects, deleteClotheWithImageID }

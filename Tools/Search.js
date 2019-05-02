@@ -10,6 +10,9 @@ function searchClothesWithTagsInDatabase(searchString, database) {
                 if (clothe.tags.length == 0) {
                     result.push(clothe)
                 }
+                else if (!clothe.tags.includes(Clothe.Top) && !clothe.tags.includes(Clothe.Bottom) && !clothe.tags.includes(Clothe.Jacket) && !clothe.tags.includes(Clothe.Shoe)) {
+                    result.push(clothe)
+                }
             })
         }
         else {
