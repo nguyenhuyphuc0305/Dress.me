@@ -31,7 +31,7 @@ var Clothe = require("../Models/Clothe").Clothe
 
 //All methods
 function uploadFileToStorageAndReturnLink(imagePath) {
-    return new Promise(async function(resolve) {
+    return new Promise(async function (resolve) {
         // Uploads a local file to the bucket
         await storage.bucket(bucketName).upload(imagePath, {
             // Support for HTTP requests made with `Accept-Encoding: gzip`
@@ -39,7 +39,7 @@ function uploadFileToStorageAndReturnLink(imagePath) {
             metadata: {
                 cacheControl: 'public, max-age=31536000',
             },
-        }, function(err, file) {
+        }, function (err, file) {
             if (err) { console.log(err) } else {
                 const result = `https://firebasestorage.googleapis.com/v0/b/dressme-asian47.appspot.com/o/${file.name}?alt=media&token=bf232cdc-4d68-4f8f-89c7-94388dea3b78`;
                 resolve(result)
@@ -49,16 +49,16 @@ function uploadFileToStorageAndReturnLink(imagePath) {
 }
 
 function handleImagesInAndUpdateDatabase(imagePaths) {
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
         var allClothes = []
-            //Copy to database
-        imagePaths.forEach(async function(imagePath) {
+        //Copy to database
+        imagePaths.forEach(async function (imagePath) {
             const imageID = md5File.sync(imagePath)
             const imagePathOnStorage = await uploadFileToStorageAndReturnLink(imagePath)
 
             const imageData = {
                 imageID: imageID,
-                imageName: path.basename(imagePath),
+                imageName: imageID,
                 imagePath: imagePathOnStorage,
                 tags: [],
             }
@@ -78,7 +78,7 @@ function handleImagesInAndUpdateDatabase(imagePaths) {
 }
 
 function addOrDeleteTagFromImageWithID(clotheID, tagName) {
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
         db.collection('clothes').doc(clotheID).get()
             .then(doc => {
                 if (!doc.exists) {
@@ -93,8 +93,8 @@ function addOrDeleteTagFromImageWithID(clotheID, tagName) {
                     }
                     savedTags = [...new Set(savedTags)]
                     db.collection('clothes').doc(clotheID).update({
-                            tags: savedTags
-                        })
+                        tags: savedTags
+                    })
                         .then(() => {
                             resolve()
                         })
@@ -106,14 +106,25 @@ function addOrDeleteTagFromImageWithID(clotheID, tagName) {
     })
 }
 
+Array.prototype.clean = function (deleteValue) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == deleteValue) {
+            this.splice(i, 1);
+            i--;
+        }
+    }
+    return this;
+};
+
 function readTagsForImageWithID(clotheID) {
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
         db.collection('clothes').doc(clotheID).get()
             .then(doc => {
                 if (!doc.exists) {
                     console.log("No image found")
                 } else {
                     const savedTags = doc.data().tags
+                    savedTags.clean("")
                     resolve(savedTags)
                 }
             })
@@ -124,7 +135,7 @@ function readTagsForImageWithID(clotheID) {
 }
 
 function getAllClothesAndParseItIntoObjects() {
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
         var allClothes = []
         db.collection('clothes').get()
             .then(snapshot => {
@@ -154,9 +165,9 @@ async function main() {
     // searchClothesWithTags(['red'])
     const test = await handleImagesInAndUpdateDatabase(["/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/1.png", "/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/2.png"])
     await addOrDeleteTagFromImage(test[0], "red")
-        // var a = await readTagsForImage(test[0])
-        // console.log(a)
-        // const sample = await getAllClothesAndParseItIntoObjects()
+    // var a = await readTagsForImage(test[0])
+    // console.log(a)
+    // const sample = await getAllClothesAndParseItIntoObjects()
 }
 
 // main()

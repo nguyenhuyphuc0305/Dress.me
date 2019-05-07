@@ -12,6 +12,8 @@ var Clothe = require("../../Models/Clothe").Clothe
 //Variables
 var selectedImageID = ''
 
+main()
+
 function main() {
     displayAllImagesOnDatabase();
     $('#import-btn').click(function () {
@@ -50,8 +52,8 @@ function main() {
             //Basically check all tags that are previously selected
             $('span#' + savedTag).css({ 'display': 'block' });
         })
-        // displayAllImagesOnDatabase()
-        // dismissContextMenu()
+        displayAllImagesOnDatabase()
+        dismissContextMenu()
     })
     $('#import-menu-display').click(function () {
         dismissContextMenu()
@@ -117,4 +119,3 @@ function dismissContextMenu() {
     })
 }
 
-main()

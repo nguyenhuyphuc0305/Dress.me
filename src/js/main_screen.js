@@ -9,6 +9,8 @@ const startSection = '#welcome'
 const list1 = ['#about-menu-display', '#welcome-menu-display', '#import-menu-display', '#clothes-menu-display']
 const list2 = ['#about-menu', '#welcome-menu', '#import-menu', '#clothes-menu']
 
+main()
+
 function main() {
     importSectionsToDOM()
     setMenuOnClickEvent()
@@ -67,4 +69,3 @@ function buttonShowSectionHandler() {
     })
 }
 
-main()

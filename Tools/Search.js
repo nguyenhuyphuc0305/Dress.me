@@ -31,10 +31,11 @@ function searchClothesWithTagsInDatabase(searchString, database) {
 }
 
 async function main() {
-    // const a = await searchClothesWithTagsInDatabase('find me red clothes')
-    // console.log(a)
+    const database = await DatabaseWrapper.getAllClothesAndParseItIntoObjects()
+    const a = await searchClothesWithTagsInDatabase(Clothe.Bottom, database)
+    console.log(a)
 }
 
-// main()
+main()
 
 module.exports = { searchClothesWithTagsInDatabase }

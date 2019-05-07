@@ -11,6 +11,8 @@ var clothesDatabase = []
 const buttonList = ['icon-button-top', 'icon-button-jacket', 'icon-button-bottom', 'icon-button-shoes']
 var current = ''
 
+main()
+
 async function main() {
     clothesDatabase = await DatabaseWrapper.getAllClothesAndParseItIntoObjects()
     displayRecommendation()
@@ -79,4 +81,3 @@ function setTypeOnClick() {
     })
 }
 
-main()
