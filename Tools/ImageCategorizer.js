@@ -1,3 +1,6 @@
+var Clothe = require("../Models/Clothe").Clothe
+var DatabaseWrapper = require('./Database')
+
 var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 var fs = require('fs');
 
@@ -6,19 +9,36 @@ var visualRecognition = new VisualRecognitionV3({
     iam_apikey: 'fWrOFZQEeabhmw2JbcOAyjsE2yGWvjTk43a2wYhAPNgU'
 });
 
-var url = 'https://firebasestorage.googleapis.com/v0/b/dressme-asian47.appspot.com/o/2a77b75c449be1ac195b5c6561519a7e.jpg?alt=media&token=5417c88a-528f-43d3-8754-951d83fb5f1c';
+function getTagsForAllClothes(allClothes) {
+    return new Promise(function (resolve) {
+        allClothes.forEach(function (clothe) {
+            var params = {
+                url: clothe.imagePath,
+            };
 
-var params = {
-    url: url,
-};
+            visualRecognition.classify(params, function (err, response) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    handleIBMResult(response)
+                    resolve()
+                }
+            });
+        })
+    })
+}
 
-visualRecognition.classify(params, function (err, response) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(JSON.stringify(response, null, 2))
-    }
-});
+function handleIBMResult(response) {
+    //Do some manipulation and push got tags here here
+    console.log(JSON.stringify(response, null, 2))
+}
+
+async function main() {
+    const database = await DatabaseWrapper.getAllClothesAndParseItIntoObjects()
+    await getTagsForAllClothes(database)
+}
+
+// main()
 
 // var images_file = fs.createReadStream(path.join('Clothes', '40RR_16_JOSEPH_ABBOUD_HERITAGE_TAN_MAIN.zip'));
 
@@ -72,4 +92,4 @@ function getData(zipPath) {
 
 // getData(path.join('Clothes', '40RR_16_JOSEPH_ABBOUD_HERITAGE_TAN_MAIN.zip'))
 
-// module.exports = { getData }
+module.exports = { getTagsForAllClothes }
