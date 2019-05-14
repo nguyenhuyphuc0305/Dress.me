@@ -1,13 +1,14 @@
 //#region Stupid lengthy import
-//For copying and moving files
+//For renaming files
 var path = require('path')
+var fs = require('fs');
 
 //For hash generation (id for image)
 const md5File = require('md5-file')
 
 //For firestore (database)
 const admin = require('firebase-admin')
-const serviceAccount = require('../ServiceAccountKey.json')
+const serviceAccount = require('./ServiceAccountKey.json')
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://dressme-asian47.firebaseio.com"
@@ -30,21 +31,27 @@ var Clothe = require("../Models/Clothe").Clothe
 //All Properties
 
 //All methods
-function uploadFileToStorageAndReturnLink(imagePath) {
+function uploadFileToStorageAndReturnLink(imagePath, newName) {
     return new Promise(async function (resolve) {
-        // Uploads a local file to the bucket
-        await storage.bucket(bucketName).upload(imagePath, {
-            // Support for HTTP requests made with `Accept-Encoding: gzip`
-            gzip: true,
-            metadata: {
-                cacheControl: 'public, max-age=31536000',
-            },
-        }, function (err, file) {
-            if (err) { console.log(err) } else {
-                const result = `https://firebasestorage.googleapis.com/v0/b/dressme-asian47.appspot.com/o/${file.name}?alt=media&token=bf232cdc-4d68-4f8f-89c7-94388dea3b78`;
-                resolve(result)
-            }
-        })
+        var currentDir = path.dirname(imagePath)
+        var newDirName = path.join(currentDir, newName) + "." + imagePath.split('.').pop()
+        console.log(newDirName)
+        fs.rename(imagePath, newDirName, async function (err) {
+            if (err) console.log('ERROR: ' + err);
+            // Uploads a local file to the bucket
+            await storage.bucket(bucketName).upload(newDirName, {
+                // Support for HTTP requests made with `Accept-Encoding: gzip`
+                gzip: true,
+                metadata: {
+                    cacheControl: 'public, max-age=31536000',
+                },
+            }, function (err, file) {
+                if (err) { console.log(err) } else {
+                    const result = `https://firebasestorage.googleapis.com/v0/b/dressme-asian47.appspot.com/o/${file.name}?alt=media&token=bf232cdc-4d68-4f8f-89c7-94388dea3b78`;
+                    resolve(result)
+                }
+            })
+        });
     })
 }
 
@@ -54,11 +61,11 @@ function handleImagesInAndUpdateDatabase(imagePaths) {
         //Copy to database
         imagePaths.forEach(async function (imagePath) {
             const imageID = md5File.sync(imagePath)
-            const imagePathOnStorage = await uploadFileToStorageAndReturnLink(imagePath)
+            const imagePathOnStorage = await uploadFileToStorageAndReturnLink(imagePath, imageID)
 
             const imageData = {
                 imageID: imageID,
-                imageName: imageID,
+                imageName: path.basename(imagePath),
                 imagePath: imagePathOnStorage,
                 tags: [],
             }
@@ -76,6 +83,17 @@ function handleImagesInAndUpdateDatabase(imagePaths) {
         })
     })
 }
+
+// function getDownloadableLinkForImageWithID(clotheID) {
+//     return new Promise(function (resolve) {
+//         storage.bucket(bucketName).file(clotheID).getSignedUrl({
+//             action: 'read',
+//             expires: '03-09-2020'
+//         }).then(function (urls) {
+//             resolve(urls)
+//         })
+//     })
+// }
 
 function addOrDeleteTagFromImageWithID(clotheID, tagName) {
     return new Promise(function (resolve) {
@@ -163,8 +181,10 @@ function deleteClotheWithImageID(clotheID) {
 
 async function main() {
     // searchClothesWithTags(['red'])
-    const test = await handleImagesInAndUpdateDatabase(["/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/1.png", "/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/2.png"])
-    await addOrDeleteTagFromImage(test[0], "red")
+    // const test = await handleImagesInAndUpdateDatabase(["/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/1.png", "/Users/crzqag/Desktop/NodeJS/Electron/Dress.me/DevelopmentMode/2.png"])
+    // await addOrDeleteTagFromImage(test[0], "red")
+    // const result = await getDownloadableLinkForImageWithID("500ce8ba9d80ce9072703532708fe7f5")
+    console.log(result)
     // var a = await readTagsForImage(test[0])
     // console.log(a)
     // const sample = await getAllClothesAndParseItIntoObjects()

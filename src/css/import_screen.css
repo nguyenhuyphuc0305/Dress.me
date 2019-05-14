@@ -41,3 +41,7 @@ body {
     font-size: 12px;
     text-align: center;
 }
+
+img {
+    object-fit: contain;
+}
