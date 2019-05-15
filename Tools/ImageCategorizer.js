@@ -20,14 +20,15 @@ function getTagsForAllClothes(allClothes) {
         if (notProcessedClothes.length == 0) {
             resolve()
         }
-        notProcessedClothes.forEach(function (clothe) {
+        notProcessedClothes.forEach(async function (clothe, index) {
             var params = {
                 url: clothe.imagePath,
                 owners: ['me'],
-                threshold: 0.6,
+                threshold: 0.2,
             };
 
-            visualRecognition.classify(params, function (err, response) {
+            // if (index == 0) {
+            await visualRecognition.classify(params, function (err, response) {
                 if (err) {
                     console.log(err);
                 } else {
@@ -42,6 +43,7 @@ function getTagsForAllClothes(allClothes) {
                     })
                 }
             });
+        // }
         })
     })
 }
@@ -60,6 +62,9 @@ async function handleIBMResultAndPutTagsOnDatabase(response, imageID) {
                     if (gotTag == "Shoes") { gotTag = "shoe" }
                     else if (gotTag == "Bottom") { gotTag = "bottom" }
                     else if (gotTag == "Top") { gotTag = "top" }
+                    else {
+                        gotTag = gotTag.toLowerCase()
+                    }
                     //FIXME
                     allTags.push(gotTag)
                 }

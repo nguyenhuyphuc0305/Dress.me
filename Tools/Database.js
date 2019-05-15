@@ -143,12 +143,13 @@ function applyTagsToImageWithID(clotheID, newTags) {
 
 function updateIsProcessedState(clotheID) {
     return new Promise(function (resolve) {
-        db.collection('clothes').doc(clotheID).update({
-            isProcessed: true
-        })
-        .then(() => {
-            resolve()
-        })
+        // db.collection('clothes').doc(clotheID).update({
+        //     isProcessed: true
+        // })
+        // .then(() => {
+        //     resolve()
+        // })
+        resolve()
     })
 }
 
