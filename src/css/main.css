@@ -17,6 +17,9 @@
 /* REUSABLE COMPONENTS */
 /* ----------------------------------------------- */
 
+body {
+    overflow: hidden;
+}
 
 h1 {
     word-spacing: 4px;
@@ -219,6 +222,22 @@ li {
 
 .context-menu {
     box-shadow: 0 0 20px 0 #ccc;
+    overflow-y: scroll;
+    height: 200px;
+}
+
+.context-menu::-webkit-scrollbar {
+    width: 10px;
+}
+
+.context-menu::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 20px;
+}
+
+.context-menu::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
 }
 
 .context-menu ul li:not(.tags-separator) {
@@ -329,13 +348,16 @@ li {
     display: block;
     position: absolute;
     width: 100%;
+    pointer-events: none;
 }
 
 #toggle {
     width: 28px;
     height: 30px;
     margin: 10px 0;
-    margin-left: 5%
+    margin-left: 5%;
+    pointer-events: auto;
+
 }
 
 #toggle div {
@@ -363,7 +385,7 @@ li {
     position: relative;
     color: white;
     border: 1px solid white;
-    width: 513px;
+    width: 565px;
     height: 300px;
     padding: 10px;
     border-radius: 3px;
@@ -371,6 +393,7 @@ li {
     display: none;
     z-index: 999;
     background-color: rgb(185, 123, 123);
+    pointer-events: auto;
 }
 
 .search-icon {
@@ -462,26 +485,31 @@ li {
 }
 
 .search-icon:nth-of-type(15) {
-    left: calc(0px + 10px);
-    top: calc(2*40px + 2*15px + 15px)
+    left: calc(10*40px + 10*10px + 10px);
+    top: calc(1*40px + 1*15px + 15px)
 }
 
 .search-icon:nth-of-type(16) {
-    left: calc(40px + 10px + 10px);
+    left: calc(0px + 10px);
     top: calc(2*40px + 2*15px + 15px)
 }
 
 .search-icon:nth-of-type(17) {
-    left: calc(2*40px + 2*10px + 10px);
+    left: calc(40px + 10px + 10px);
     top: calc(2*40px + 2*15px + 15px)
 }
 
 .search-icon:nth-of-type(18) {
+    left: calc(2*40px + 2*10px + 10px);
+    top: calc(2*40px + 2*15px + 15px)
+}
+
+.search-icon:nth-of-type(19) {
     left: calc(0px + 10px);
     top: calc(3*40px + 3*15px + 15px)
 }
 
-.search-icon:nth-of-type(19) {
+.search-icon:nth-of-type(20) {
     left: calc(40px + 10px + 10px);
     top: calc(3*40px + 3*15px + 15px)
 }

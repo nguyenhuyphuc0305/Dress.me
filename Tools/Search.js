@@ -30,6 +30,27 @@ function searchClothesWithTagsInDatabase(searchString, database) {
     })
 }
 
+function searchClothesWithTagsInDatabaseAND(searchString, database) {
+    return new Promise(function (resolve) {
+        const allClothes = database
+        var result = []
+        const allTags = searchString.split(",")
+        allClothes.forEach(function (clothe) {
+            var score = 0
+            allTags.forEach(function (tag) {
+                if (clothe.tags.includes(tag)) {
+                    score += 1
+                }
+            })
+            if (score == allTags.length) {
+                result.push(clothe)
+            }
+        })
+        result = [...new Set(result)];
+        resolve(result)
+    })
+}
+
 async function main() {
     // const a = await searchClothesWithTagsInDatabase('find me red clothes')
     // console.log(a)
@@ -37,4 +58,4 @@ async function main() {
 
 // main()
 
-module.exports = { searchClothesWithTagsInDatabase }
+module.exports = { searchClothesWithTagsInDatabase, searchClothesWithTagsInDatabaseAND }

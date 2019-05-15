@@ -80,18 +80,18 @@ function main() {
             displayAllImagesOnDatabase();
         } else {
             DatabaseWrapper.getAllClothesAndParseItIntoObjects().then(async function (database) {
-                searchResult = await SearchTool.searchClothesWithTagsInDatabase(searchArray.join(), database)
-                console.log(searchResult)
+                var searchArrayUpper = []
+                searchResult = await SearchTool.searchClothesWithTagsInDatabaseAND(searchArray.join(), database)
+                searchArrayUpper = searchArray.map(tag => tag.charAt(0).toUpperCase() + tag.slice(1))
+                $('.search-img-container').append('<h1>' + searchArrayUpper.join(' and ') + '</h1>')
                 searchResult.forEach(function (clothe) {
                     $('.search-img-container').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
                 })
             })
+
             $('.imported-img').remove()
             $('#img-container div h1').remove()
-
-
         }
-        console.log(searchArray.join())
     })
 }
 
@@ -105,7 +105,6 @@ function importNewImages() {
     }, function (imagePaths) {
         // console.log(imagePaths)
         if (imagePaths != undefined) {
-
             DatabaseWrapper.handleImagesInAndUpdateDatabase(imagePaths)
                 .then(() => {
                     console.log("Successfully imported and updated database.")
