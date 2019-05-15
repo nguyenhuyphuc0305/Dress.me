@@ -3,6 +3,9 @@ var $ = require("jquery");
 
 //Requires to allow users to pickup files
 const { dialog } = require('electron').remote;
+const archiver = require('archiver')
+const fs = require('fs')
+const path = require('path')
 
 //Import neccessary Tools and Models used by this file
 var DatabaseWrapper = require('../../Tools/Database')
@@ -56,6 +59,40 @@ function main() {
     $('#import-menu-display').click(function () {
         dismissContextMenu()
     })
+    $("#toggle").click(function () {
+        $(this).toggleClass("on");
+        $("#search-menu").slideToggle();
+    });
+    $('.search-icon').click(function () {
+        $(this).toggleClass('current-search')
+    })
+    $('#letsearch').click(function () {
+        var searchArray = []
+        $('.current-search').each(function () {
+            searchArray.push(this.id.split('-')[0])
+        })
+        if (searchArray.length == 0) {
+            $('#img-container .top-container-import').append('<h1>Top</h1>')
+            $('#img-container .jacket-container-import').append('<h1>Jacket</h1>')
+            $('#img-container .bottom-container-import').append('<h1>Bottom</h1>')
+            $('#img-container .shoes-container-import').append('<h1>Shoes</h1>')
+            $('#img-container .other-container-import').append('<h1>Other</h1>')
+            displayAllImagesOnDatabase();
+        } else {
+            DatabaseWrapper.getAllClothesAndParseItIntoObjects().then(async function (database) {
+                searchResult = await SearchTool.searchClothesWithTagsInDatabase(searchArray.join(), database)
+                console.log(searchResult)
+                searchResult.forEach(function (clothe) {
+                    $('.search-img-container').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                })
+            })
+            $('.imported-img').remove()
+            $('#img-container div h1').remove()
+
+
+        }
+        console.log(searchArray.join())
+    })
 }
 
 function importNewImages() {
@@ -68,6 +105,7 @@ function importNewImages() {
     }, function (imagePaths) {
         // console.log(imagePaths)
         if (imagePaths != undefined) {
+
             DatabaseWrapper.handleImagesInAndUpdateDatabase(imagePaths)
                 .then(() => {
                     console.log("Successfully imported and updated database.")
