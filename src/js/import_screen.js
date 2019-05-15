@@ -3,6 +3,8 @@ var $ = require("jquery");
 
 //Requires to allow users to pickup files
 const { dialog } = require('electron').remote;
+const fs = require('fs')
+const path = require('path')
 
 //Import neccessary Tools and Models used by this file
 var DatabaseWrapper = require('../../Tools/Database')
@@ -18,7 +20,7 @@ var selectedImageID = ''
 
 main()
 
-ipc.on('reload-screen-now', function(event) {
+ipc.on('reload-screen-now', function (event) {
     displayAllImagesOnDatabase()
 })
 
@@ -69,6 +71,43 @@ function main() {
     $('#import-menu-display').click(function () {
         dismissContextMenu()
     })
+    $("#toggle").click(function () {
+        $(this).toggleClass("on");
+        $("#search-menu").slideToggle();
+    });
+    $('.search-icon').click(function () {
+        $(this).toggleClass('current-search')
+    })
+    $('#letsearch').click(function () {
+        var searchArray = []
+        $('.current-search').each(function () {
+            searchArray.push(this.id.split('-')[0])
+        })
+        if (searchArray.length == 0) {
+            $('#img-container .top-container-import').append('<h1>Top</h1>')
+            $('#img-container .jacket-container-import').append('<h1>Jacket</h1>')
+            $('#img-container .bottom-container-import').append('<h1>Bottom</h1>')
+            $('#img-container .shoes-container-import').append('<h1>Shoes</h1>')
+            $('#img-container .other-container-import').append('<h1>Other</h1>')
+            displayAllImagesOnDatabase();
+            $('.search-img-container h1').remove()
+        } else {
+            DatabaseWrapper.getAllClothesAndParseItIntoObjects().then(async function (database) {
+                var searchArrayUpper = []
+                searchResult = await SearchTool.searchClothesWithTagsInDatabaseORAND(searchArray.join(), database)
+                searchArrayUpper = searchArray.map(tag => tag.charAt(0).toUpperCase() + tag.slice(1))
+                $('.search-img-container').append('<h1>' + searchArrayUpper.join(' and ') + '</h1>')
+                searchResult.forEach(function (clothe) {
+                    $('.search-img-container').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")
+                })
+            })
+            $('.imported-img').remove()
+            $('#img-container div h1').remove()
+
+
+        }
+        console.log(searchArray.join())
+    })
 }
 
 function importNewImages() {
@@ -97,11 +136,11 @@ function displayAllImagesOnDatabase() {
     DatabaseWrapper.getAllClothesAndParseItIntoObjects()
         .then(async function (database) {
             // console.log(database)
-            const allTops = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Top, database)
-            const allJackets = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Jacket, database)
-            const allBots = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Bottom, database)
-            const allShoes = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Shoe, database)
-            const noneTypes = await SearchTool.searchClothesWithTagsInDatabase(null, database)
+            const allTops = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Top, database)
+            const allJackets = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Jacket, database)
+            const allBots = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Bottom, database)
+            const allShoes = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Shoe, database)
+            const noneTypes = await SearchTool.searchClothesWithTagsInDatabaseOR(null, database)
             // console.log(noneTypes)
             allTops.forEach(function (clothe) {
                 $('.top-container-import').append("<img class='col span-1-of-5 imported-img' id='" + clothe.imageID + "' src='" + clothe.imagePath + "'>")

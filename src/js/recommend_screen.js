@@ -49,7 +49,7 @@ async function showTopOnLoad() {
     current = 'top'
     $('.main-clothes').remove()
 
-    const allTops = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Top, clothesDatabase)
+    const allTops = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Top, clothesDatabase)
     allTops.forEach(function (clothe) {
         $('.below-below-clothes-select-header').append("<img class='col span-1-of-3 main-clothes' id='main." + clothe.imageID + "' src='" + clothe.imagePath + "'>")
     })
@@ -70,7 +70,7 @@ function setTypeOnClick() {
         if (buttonList.includes(event.target.id)) {
             $('.main-clothes').remove()
 
-            const allClothesWithSelectedTags = await SearchTool.searchClothesWithTagsInDatabase(selectedTag, clothesDatabase)
+            const allClothesWithSelectedTags = await SearchTool.searchClothesWithTagsInDatabaseOR(selectedTag, clothesDatabase)
             allClothesWithSelectedTags.forEach(function (clothe) {
                 $('.below-below-clothes-select-header').append("<img class='col span-1-of-3 main-clothes' id='main." + clothe.imageID + "' src='" + clothe.imagePath + "'>")
             })

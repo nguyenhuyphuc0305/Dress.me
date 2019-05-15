@@ -16,10 +16,10 @@ function recommendTodayOutfit(clotheDatabase) {
         //Get weather first
         const temperature = await WeatherTool.getWeatherForZip(19104, "imperial")
 
-        var allTops = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Top, clotheDatabase)
-        var allJackets = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Jacket, clotheDatabase)
-        var allBots = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Bottom, clotheDatabase)
-        var allShoes = await SearchTool.searchClothesWithTagsInDatabase(Clothe.Shoe, clotheDatabase)
+        var allTops = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Top, clotheDatabase)
+        var allJackets = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Jacket, clotheDatabase)
+        var allBots = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Bottom, clotheDatabase)
+        var allShoes = await SearchTool.searchClothesWithTagsInDatabaseOR(Clothe.Shoe, clotheDatabase)
 
         const newRecommendation = new Recommendation(allTops[0], allJackets[0], allBots[0], allShoes[0])
         resolve(newRecommendation)

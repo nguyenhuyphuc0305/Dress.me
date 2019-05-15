@@ -1,7 +1,7 @@
 var Clothe = require("../Models/Clothe").Clothe
 var DatabaseWrapper = require('./Database')
 
-function searchClothesWithTagsInDatabase(searchString, database) {
+function searchClothesWithTagsInDatabaseOR(searchString, database) {
     return new Promise(async function (resolve) {
         const allClothes = database
         var result = []
@@ -37,12 +37,33 @@ function searchClothesWithTagsInDatabase(searchString, database) {
     })
 }
 
+function searchClothesWithTagsInDatabaseORAND(searchString, database) {
+    return new Promise(function (resolve) {
+        const allClothes = database
+        var result = []
+        const allTags = searchString.split(",")
+        allClothes.forEach(function (clothe) {
+            var score = 0
+            allTags.forEach(function (tag) {
+                if (clothe.tags.includes(tag)) {
+                    score += 1
+                }
+            })
+            if (score == allTags.length) {
+                result.push(clothe)
+            }
+        })
+        result = [...new Set(result)];
+        resolve(result)
+    })
+}
+
 async function main() {
     const database = await DatabaseWrapper.getAllClothesAndParseItIntoObjects()
-    const a = await searchClothesWithTagsInDatabase(Clothe.Bottom, database)
+    const a = await searchClothesWithTagsInDatabaseOR(Clothe.Bottom, database)
     console.log(a)
 }
 
 // main()
 
-module.exports = { searchClothesWithTagsInDatabase }
+module.exports = { searchClothesWithTagsInDatabaseOR, searchClothesWithTagsInDatabaseORAND }

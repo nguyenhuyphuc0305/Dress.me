@@ -54,9 +54,6 @@ class Clothe {
     static get Hot() {
         return 'hot'
     }
-    static get Warm() {
-        return 'warm'
-    }
     static get Cool() {
         return 'cool'
     }
