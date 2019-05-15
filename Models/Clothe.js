@@ -74,11 +74,12 @@ class Clothe {
     }
     /* #endregion */
 
-    constructor(imageID, imageName, imagePath, tags) {
+    constructor(imageID, imageName, imagePath, tags, isProcessed) {
         this.imageID = imageID
         this.imageName = imageName
         this.imagePath = imagePath
         this.tags = tags
+        this.isProcessed = isProcessed
     }
 }
 

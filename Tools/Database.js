@@ -1,3 +1,5 @@
+var colors = require('colors');
+
 //#region Stupid lengthy import
 //For renaming files
 var path = require('path')
@@ -68,6 +70,7 @@ function handleImagesInAndUpdateDatabase(imagePaths) {
                 imageName: path.basename(imagePath),
                 imagePath: imagePathOnStorage,
                 tags: [],
+                isProcessed: false,
             }
 
             db.collection('clothes').doc(imageID).set(imageData)
@@ -104,9 +107,12 @@ function addOrDeleteTagFromImageWithID(clotheID, tagName) {
                 } else {
                     // console.log(doc.data())
                     var savedTags = doc.data().tags
-                    if (savedTags.indexOf(tagName) > -1) {
+                    if (savedTags != undefined && savedTags.indexOf(tagName) > -1) {
                         savedTags.splice(savedTags.indexOf(tagName), 1)
                     } else {
+                        if (savedTags == undefined) {
+                            savedTags = []
+                        }
                         savedTags.push(tagName)
                     }
                     savedTags = [...new Set(savedTags)]
@@ -121,6 +127,28 @@ function addOrDeleteTagFromImageWithID(clotheID, tagName) {
             .catch(err => {
                 console.log(err)
             })
+    })
+}
+
+function applyTagsToImageWithID(clotheID, newTags) {
+    return new Promise(function (resolve) {
+        db.collection('clothes').doc(clotheID).update({
+            tags: newTags
+        })
+        .then(() => {
+            resolve()
+        })
+    })
+}
+
+function updateIsProcessedState(clotheID) {
+    return new Promise(function (resolve) {
+        db.collection('clothes').doc(clotheID).update({
+            isProcessed: true
+        })
+        .then(() => {
+            resolve()
+        })
     })
 }
 
@@ -141,8 +169,14 @@ function readTagsForImageWithID(clotheID) {
                 if (!doc.exists) {
                     console.log("No image found")
                 } else {
-                    const savedTags = doc.data().tags
-                    savedTags.clean("")
+                    var savedTags = doc.data().tags
+                    
+                    if (savedTags == undefined) {
+                        savedTags = []
+                    }
+                    else {
+                        savedTags.clean("")
+                    }
                     resolve(savedTags)
                 }
             })
@@ -161,7 +195,8 @@ function getAllClothesAndParseItIntoObjects() {
                     console.log("No image found")
                 } else {
                     snapshot.forEach(doc => {
-                        const receivedSavedClothe = new Clothe(doc.data().imageID, doc.data().imageName, doc.data().imagePath, doc.data().tags)
+                        const isProcessed = doc.data().isProcessed
+                        const receivedSavedClothe = new Clothe(doc.data().imageID, doc.data().imageName, doc.data().imagePath, doc.data().tags, isProcessed)
                         allClothes.push(receivedSavedClothe)
                         if (allClothes.length == snapshot.docs.length) {
                             resolve(allClothes)
@@ -192,4 +227,4 @@ async function main() {
 
 // main()
 
-module.exports = { handleImagesInAndUpdateDatabase, addOrDeleteTagFromImageWithID, readTagsForImageWithID, getAllClothesAndParseItIntoObjects, deleteClotheWithImageID }
+module.exports = { handleImagesInAndUpdateDatabase, addOrDeleteTagFromImageWithID, readTagsForImageWithID, getAllClothesAndParseItIntoObjects, deleteClotheWithImageID, applyTagsToImageWithID, updateIsProcessedState }

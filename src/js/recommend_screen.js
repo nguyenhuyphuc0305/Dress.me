@@ -24,17 +24,25 @@ async function displayRecommendation() {
     const recommendation = await RecommendTool.recommendTodayOutfit(clothesDatabase)
     console.log(recommendation)
 
-    $(".top").remove()
-    $('.clothes-display-container').append("<img class='" + "top" + "' src='" + recommendation.top.imagePath + "'>")
+    if (recommendation.top != undefined) {
+        $(".top").remove()
+        $('.clothes-display-container').append("<img class='" + "top" + "' src='" + recommendation.top.imagePath + "'>")
+    }
 
-    $(".jacket").remove()
-    $('.clothes-display-container').append("<img class='" + "jacket" + "' src='" + recommendation.jacket.imagePath + "'>")
+    if (recommendation.jacket != undefined) {
+        $(".jacket").remove()
+        $('.clothes-display-container').append("<img class='" + "jacket" + "' src='" + recommendation.jacket.imagePath + "'>")
+    }
 
-    $(".bottom").remove()
-    $('.clothes-display-container').append("<img class='" + "bottom" + "' src='" + recommendation.bottom.imagePath + "'>")
+    if (recommendation.bottom != undefined) {
+        $(".bottom").remove()
+        $('.clothes-display-container').append("<img class='" + "bottom" + "' src='" + recommendation.bottom.imagePath + "'>")
+    }
 
-    $(".shoes").remove()
-    $('.clothes-display-container').append("<img class='" + "shoes" + "' src='" + recommendation.shoe.imagePath + "'>")
+    if (recommendation.shoe != undefined) {
+        $(".shoes").remove()
+        $('.clothes-display-container').append("<img class='" + "shoes" + "' src='" + recommendation.shoe.imagePath + "'>")
+    }
 }
 
 async function showTopOnLoad() {

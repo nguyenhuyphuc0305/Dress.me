@@ -7,10 +7,15 @@ function searchClothesWithTagsInDatabase(searchString, database) {
         var result = []
         if (searchString == null) {
             allClothes.forEach(function (clothe) {
-                if (clothe.tags.length == 0) {
-                    result.push(clothe)
+                if (clothe.tags != undefined) {
+                    if (clothe.tags.length == 0) {
+                        result.push(clothe)
+                    }
+                    else if (!clothe.tags.includes(Clothe.Top) && !clothe.tags.includes(Clothe.Bottom) && !clothe.tags.includes(Clothe.Jacket) && !clothe.tags.includes(Clothe.Shoe)) {
+                        result.push(clothe)
+                    }
                 }
-                else if (!clothe.tags.includes(Clothe.Top) && !clothe.tags.includes(Clothe.Bottom) && !clothe.tags.includes(Clothe.Jacket) && !clothe.tags.includes(Clothe.Shoe)) {
+                else {
                     result.push(clothe)
                 }
             })
@@ -18,11 +23,13 @@ function searchClothesWithTagsInDatabase(searchString, database) {
         else {
             searchString = searchString.toLowerCase()
             allClothes.forEach(function (clothe) {
-                clothe.tags.forEach(function (tag) {
-                    if (searchString.includes(tag)) {
-                        result.push(clothe)
-                    }
-                })
+                if (clothe.tags != undefined) {
+                    clothe.tags.forEach(function (tag) {
+                        if (searchString.includes(tag)) {
+                            result.push(clothe)
+                        }
+                    })
+                }
             })
         }
         result = [...new Set(result)];
@@ -36,6 +43,6 @@ async function main() {
     console.log(a)
 }
 
-main()
+// main()
 
 module.exports = { searchClothesWithTagsInDatabase }

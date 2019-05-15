@@ -8,11 +8,19 @@ const { dialog } = require('electron').remote;
 var DatabaseWrapper = require('../../Tools/Database')
 var SearchTool = require("../../Tools/Search")
 var Clothe = require("../../Models/Clothe").Clothe
+var RecognitionTool = require("../../Tools/ImageCategorizer")
+
+//Fix weird Refused to set unsafe header "Accept-Encoding" error causing by Electron
+const ipc = require('electron').ipcRenderer
 
 //Variables
 var selectedImageID = ''
 
 main()
+
+ipc.on('reload-screen-now', function(event) {
+    displayAllImagesOnDatabase()
+})
 
 function main() {
     displayAllImagesOnDatabase();
@@ -21,6 +29,9 @@ function main() {
     })
     $('#display-btn').click(function () {
         displayAllImagesOnDatabase()
+    })
+    $('#recognize-btn').click(function () {
+        ipc.send('start-recognition-now')
     })
     $('#img-container').on('contextmenu', '.imported-img', async function (event) {
         event.preventDefault();
