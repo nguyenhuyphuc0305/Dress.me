@@ -1,0 +1,461 @@
+@font-face {
+	font-family: 'Anodyne';
+	src: url('webfonts/234548_0_0.eot');
+	src: url('webfonts/234548_0_0d41d.eot?#iefix') format('embedded-opentype'),
+	url('webfonts/234548_0_0.woff') format('woff'),
+	url('webfonts/234548_0_0.ttf') format('truetype');
+	
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'TradeGothicCondensed';
+	src: url('webfonts/tradegothic-cn-18.eot');
+	src: url('webfonts/tradegothic-cn-18d41d.eot?#iefix') format('embedded-opentype'),
+	url('webfonts/tradegothic-cn-18.woff') format('woff'),
+	url('webfonts/tradegothic-cn-18.ttf') format('truetype'),
+	url('webfonts/tradegothic-cn-18.svg#TradeGothicLTStdCnRegular') format('svg');
+	
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'TradeGothicCondensedBold';
+	src: url('webfonts/tradegothicltstd-bdcn20-webfont.eot');
+	src: url('webfonts/tradegothicltstd-bdcn20-webfontd41d.eot?#iefix') format('embedded-opentype'),
+	url('webfonts/tradegothicltstd-bdcn20-webfont.woff') format('woff'),
+	url('webfonts/tradegothicltstd-bdcn20-webfont.ttf') format('truetype'),
+	url('webfonts/tradegothicltstd-bdcn20-webfont.svg#TradeGothicLTStdCnBold') format('svg');
+	
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* ------------------------------------------------------- */
+/* SIMPLE RESET */
+/* ------------------------------------------------------- */
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	border: none;
+	font-family: 'Anodyne', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	color: #000;
+	background-color: #000;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+section {
+	display: block;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+	outline: 0 none;
+}
+
+img {
+	border: none;
+	outline: 0 none;
+}
+
+ul,
+li {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+form,
+input,
+textarea {
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+}
+
+/* ------------------------------------------------------- */
+/* COMMON STYLES */
+/* ------------------------------------------------------- */
+section,
+.photo,
+.photo img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+
+/* ------------------------------------------------------- */
+/* WRAPPER */
+/* ------------------------------------------------------- */
+#wrapper {
+	min-height: 620px;
+}
+
+/* ------------------------------------------------------- */
+/* CONTENT CARD */
+/* ------------------------------------------------------- */
+.content-card {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 998px;
+	height: 600px;
+	margin: -340px 0 0 -499px;
+}
+
+.content-card .story {
+	width: 610px;
+	margin-left: 388px;
+	display: block;
+}
+
+.content-card .story h1 {
+	margin: 31px 0 0;
+	font-size: 68px;
+	line-height: 68px;
+	text-transform: uppercase;
+}
+
+.content-card .story p {
+	margin-top: 20px;
+	font-size: 16px;
+	line-height: 24px;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	color: #180e09;
+}
+
+/* /* ------------------------------------------------------- */ */
+/* /* CATEGORY SCENES */ */
+/* /* ------------------------------------------------------- */ */
+/* .scenes { */
+	/* top: -100%; */
+	/* background-color: #000; */
+/* } */
+
+
+/* ------------------------------------------------------- */
+/* CONTACT */
+/* ------------------------------------------------------- */
+#contact .content-card {
+	height: 514px;
+	margin: -257px 0 0 -499px;
+}
+
+#contact .content-card .story {
+	width: 998px;
+	margin: 0;
+	display: block;
+}
+
+#contact .content-card .story h1,
+#contact .content-card .story p {
+	margin: 0 0 0 67px;
+}
+
+#contact-card {
+	position: relative;
+	width: 998px;
+	height: 401px;
+	padding-top: 20px;
+	background: url('images/contact/card-bg.png') no-repeat center top;
+	display: block;
+}
+
+#contact-card #contact-info {
+	position: absolute;
+	top: 45px;
+	left: 630px;
+	width: 290px;
+}
+
+#contact-card #contact-info p {
+	margin: 0 0 16px;
+	font-size: 15px;
+	line-height: 18px;
+	color: #000;
+}
+
+#contact-card #contact-info #contact-opts {
+	margin-bottom: 30px;
+}
+
+#contact-card #contact-info #contact-rep {
+	margin-bottom: 33px;
+}
+
+#contact-card #contact-info p .label {
+	width: 46px;
+	display: inline-block;
+}
+
+#contact-card #contact-info p a {
+	color: #e0ad0a;
+	
+	-webkit-transition: color 0.2s ease-out;
+	-moz-transition: color 0.2s ease-out;
+	-o-transition: color 0.2s ease-out;
+	transition: color 0.2s ease-out;
+}
+
+#contact-card #contact-info p a:hover {
+  color: #cb9c06;
+}
+
+#contact-card #contact-info ul {
+	margin: 0 0 25px;
+	display: block;
+}
+
+#contact-card #contact-info ul li {
+	width: 100%;
+	height: 34px;
+	display: block;
+}
+
+#contact-card #contact-info ul li a {
+	height: 31px;
+	padding: 0 0 3px 44px;
+	font-size: 15px;
+	line-height: 31px;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	background: url('images/controls-sprite.png') no-repeat;
+	color: #000;
+	display: block;
+}
+
+#contact-card #contact-info ul li a:hover {
+	color: #513e0f;
+}
+
+#contact-card #contact-info ul li #fb {
+	background-position: -20px -760px;
+}
+
+#contact-card #contact-info ul li #fb:hover {
+	background-position: -20px -810px;
+}
+
+#contact-card #contact-info ul li #tw {
+	background-position: -20px -860px;
+}
+
+#contact-card #contact-info ul li #tw:hover {
+	background-position: -20px -910px;
+}
+
+#contact-card #contact-info ul li #ig {
+	background-position: -20px -960px;
+}
+
+#contact-card #contact-info ul li #ig:hover {
+	background-position: -20px -1010px;
+}
+
+#contact-card #contact-info ul li #pn {
+	background-position: -20px -1060px;
+}
+
+#contact-card #contact-info ul li #pn:hover {
+	background-position: -20px -1110px;
+}
+
+#contact-card #contact-info #credits {
+	margin: 0;
+	font-size: 14px;
+	line-height: 18px;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	color: #313131;
+}
+
+#contact-card #contact-info #credits span,
+#contact-card #contact-info #credits a {
+	color: #828282;
+}
+
+#contact-card #contact-info #credits a {
+	text-decoration: underline;
+}
+
+#contact-card #contact-info #credits a:hover {
+	color: #666;
+}
+
+#contact-form {
+	position: absolute;
+	top: 45px;
+	left: 90px;
+	width: 520px;
+}
+
+#hcma-form {
+	position: relative;
+	width: 100%;
+	display: block;
+}
+
+#hcma-form input,
+#hcma-form #option-field {
+	background: url('images/contact/form-sprite.png') no-repeat;
+	overflow: hidden;
+}
+
+#hcma-form .input-field,
+#hcma-form #option-field {
+	float: left;
+	width: 242px;
+	height: 24px;
+	margin: 0 0 13px;
+	padding: 8px 0 7px 15px;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	color: #aea69b;
+	background-position: 0px -162px;
+}
+
+#hcma-form #your-name {
+	margin: 0 6px 13px 0;
+}
+
+#hcma-form #email-address {
+	margin: 0 6px 11px 0;
+}
+
+#hcma-form #option-field {
+	margin: 0 0 11px;
+	background-position: 0px -201px;
+	cursor: pointer;
+}
+
+#hcma-form #message-holder {
+	float: left;
+	width: 520px;
+	height: 162px;
+	margin: 0 0 8px;
+	padding: 0;
+	background: url('images/contact/form-sprite.png') no-repeat;
+	overflow: auto;
+	resize: none;
+}
+
+#hcma-form textarea {
+	float: left;
+	width: 490px;
+	height: 142px;
+	margin: 10px 15px;
+	padding: 0;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	color: #aea69b;
+	background: none;
+	overflow: auto;
+	resize: none;
+}
+
+#hcma-form #submit-btn {
+	float: left;
+	width: 147px;
+	height: 34px;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 36px;
+	color: #ffeeb8;
+	text-align: center;
+	text-transform: uppercase;
+	background: url('images/contact/form-sprite.png') no-repeat 0px -240px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+#hcma-form #submit-btn:hover {
+	background-position: 0px -274px;
+}
+
+#hcma-form #form-message {
+	float: left;
+	width: auto;
+	height: 34px;
+	margin: 0 0 0 18px;
+	padding: 0;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 34px;
+	color: #aea69b;
+}
+
+#options-box {
+	position: absolute;
+	top: 52px;
+	left: 263px;
+	width: 257px;
+	height: 0px;
+	background-color: #fff;
+	overflow: hidden;
+	display: none;
+	
+	-webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.18);
+	-moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.18);
+	-o-box-shadow: 0px 0px 6px rgba(0,0,0,0.18);
+	box-shadow: 0px 0px 6px rgba(0,0,0,0.18);
+}
+
+#options-box li {
+	width: 242px;
+	height: 34px;
+	padding: 0 0 0 15px;
+	font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 34px;
+	color: #aea69b;
+	cursor: pointer;
+	display: block;
+	border-bottom: 1px solid #d5d0c8;
+	background-color: #fff;
+	
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-o-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+
+#options-box .last-option {
+  border: none;
+}
+
+#options-box li:hover,
+#options-box .selected {
+  color: #615a4b;
+  background-color: #dfdad3;
+}
+
+
+
+
