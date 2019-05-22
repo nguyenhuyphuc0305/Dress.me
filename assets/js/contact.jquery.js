@@ -10,10 +10,6 @@
 
 
 $(document).ready(function() {
-	
-	
-	
-	
 	var $win = $(window),
 	$loading = $('#loading'),
 	$splash = $('#splash'),

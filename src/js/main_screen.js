@@ -68,4 +68,3 @@ function buttonShowSectionHandler() {
         $('#clothes-menu').addClass('current-page');
     })
 }
-
