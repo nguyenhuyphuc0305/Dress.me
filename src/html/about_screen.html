@@ -1,27 +1,50 @@
 <template class="section-template">
-    <section id="about-menu-display" class="wrapper fullscreen">
-		<style>
-		/*body {background-color:lightblue;}
-		h1, h2, h3, h4, p, u1 {color:black; font-family:Courier New; font-size:20px;}
-		ul.a {list-style-type: circle;}*/
-		</style>
-        <body class="inner">
-		<h1>About</h1>
-		<p>
-		Dress.me is a virtual wardrobe for you to manage your real-life clothes. Our mission is to help YOU save time on deciding what to wear for
-		the next day.<br></br>
-		</p>
-		<h2>Features<br></br></h2>
-		<p>Dress.me offers a clean user interface and a lot of functionality. You can...<br></br></p>
-		<ul class="a">
-			<li>Import images of your clothes into our database and rearrange them into outfits.</li>
-			<li>Search for specific types of clothes from your wardrobe such as shirts, pants, or shoes only.</li>
-			<li>Further hone your search with tags such as color and weather.</li>
-			<li>Get full outfit recommendations on what to wear based on the weather.</li>
-			<li>Save your favorite outfits as presets so you never forget!</li><br></br>
-		</ul>
-		<h3>Team<br></br></h3>
-		<p>Quang Luong<br>Heidi Tran<br>Phuc Nguyen<br>Ricky Taing<br></br></p>
+    <section id="about-menu-display" class="wrapper fullscreen">	
+		<link rel='stylesheet' type="text/css" href='./src/css/main.css' />
+        <body>
+					<script type='text/javascript' src="./src/js/contact.jquery.js"></script> 
+		<!-- <section id="contact" class="scenes current-scene" style="top 0%;> -->
+			<div class="photo"><img src="./src/css/images/contact/texture.jpg" style="width: 1639.11px; height: 922px; left: -67px; top: 0px;" alt="" /></div>
+			<div class="content-card">
+				<div class="story">
+					<h1>Get in touch</h1>
+					<p>Thank you for your interest! We look forward to hearing from you.</p>
+					<div id="contact-card">
+						<div id="contact-form">
+							<form id="hcma-form">
+								<input type="text" class="input-field" id="your-name" autocomplete="off" value="Your name*" />
+								<input type="text" class="input-field" id="phone-number" autocomplete="off" value="Phone number" />
+								<input type="text" class="input-field" id="email-address" autocomplete="off" value="Email address*" />
+								<div id="option-field">I'm interested in...</div>
+								<div id="message-holder"><textarea id="text-area" rows="0" cols="0" >Message*</textarea></div>
+								<input type="submit" id="submit-btn" value="SEND MESSAGE" />
+								<p id="form-message">*Required fields</p>
+							</form>
+							<ul id="options-box">
+								<li class="drop-option">Get to know our developers</li>
+								<li class="drop-option">Join our developers team</li>
+								<li class="drop-option">Suggested feature</li>
+								<li class="drop-option">Report errors</li>
+								<li class="drop-option last-option">General Inquiry</li>
+							</ul>							
+						</div>
+						<div id="contact-info">
+							<p>Please fill out the form to discuss a project or call/text anytime for bookings &amp; questions</p>
+							<p id="contact-opts"><span class="label">Email</span><a href="mailto:XXX@gmail.com">XXX@gmail.com</a><br /><span class="label">Phone</span>XXX-XXX-XXXX</p>
+							<ul>
+								<li><a id="fb" href="http://facebook.com" target="_blank">Friend me on Facebook</a></li>
+								<li><a id="tw" href="http://twitter.com" target="_blank">Follow me on Twitter</a></li>
+								<li><a id="ig" href="http://instagram.com" target="_blank">Follow me on Instagram</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+			<!-- CLIENT-SIDE -->
+			<script type="text/javascript" src="./src/js/jquery-1.7.1.min.js"></script>
+			<script type="text/javascript" src="./src/js/jquery.easing.min.js"></script>
+			<script type='text/javascript' src="./src/js/modernizr.js"></script>
         </body>
     </section>
 </template>
