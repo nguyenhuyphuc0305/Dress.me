@@ -2,6 +2,8 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const ipc = require('electron').ipcMain
+const { dialog } = require('electron')
+
 
 var colors = require('colors');
 
@@ -58,5 +60,8 @@ ipc.on('start-recognition-now', function (event) {
             console.log("Successfully added tags for all clothes.".rainbow)
             win.webContents.send('reload-screen-now')
         })
+    })
+    .catch((err) => {
+        dialog.showErrorBox("Unexpected error occurred.", "Failed on attempting to connect to IBM. Error code: 183.")
     })
 })

@@ -1,4 +1,5 @@
 var colors = require('colors');
+const { dialog } = require('electron')
 
 var DatabaseWrapper = require('./Database')
 
@@ -7,20 +8,23 @@ var fs = require('fs');
 
 var visualRecognition = new VisualRecognitionV3({
     version: '2018-03-19',
-    iam_apikey: 'VFXGowsYbtnTttbwHWJAE9zAJwp0DeMMOYO709YjlwRi',
+    iam_apikey: 'gFAejnywyJHc_TV32_avt-2bDJZKFBP7SgLvFLNMuCUr',
     headers: { 'X-Watson-Learning-Opt-Out': 'true' }
 });
 
 function getTagsForAllClothes(allClothes) {
-    notProcessedClothes = allClothes.filter(function (clothe) {
-        return !clothe.isProcessed
-    })
-    var completedClothes = 0
-    return new Promise(function (resolve) {
+    var errorAlreadyShown = false
+    return new Promise(function (resolve, reject) {
+        notProcessedClothes = allClothes.filter(function (clothe) {
+            return !clothe.isProcessed
+        })
+        var completedClothes = 0
         if (notProcessedClothes.length == 0) {
             resolve()
         }
+        var error = undefined
         notProcessedClothes.forEach(async function (clothe, index) {
+
             var params = {
                 url: clothe.imagePath,
                 owners: ['me'],
@@ -30,7 +34,12 @@ function getTagsForAllClothes(allClothes) {
             // if (index == 0) {
             await visualRecognition.classify(params, function (err, response) {
                 if (err) {
-                    console.log(err);
+                    if (!errorAlreadyShown){
+                        dialog.showErrorBox("Unexpected error occurred.", "Failed on attempting to connect to IBM. Error code: 183.")
+                        errorAlreadyShown = !errorAlreadyShown
+                        console.log(err);
+                    }
+                    reject(error)
                 } else {
                     handleIBMResultAndPutTagsOnDatabase(response, clothe.imageID).then(function () {
                         DatabaseWrapper.updateIsProcessedState(clothe.imageID).then(() => {
