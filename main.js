@@ -7,9 +7,6 @@ const { dialog } = require('electron')
 
 var colors = require('colors');
 
-// require('electron-reload')(path.join(__dirname, 'index.html'),
-//     { ignored: /^[^\/]+\/Clothes\/?(?:[^\/]+\/?)*$/gm, argv: [] }
-// );
 // require('electron-reload')(__dirname)
 
 var RecognitionTool = require("./Tools/ImageCategorizer")
@@ -61,7 +58,7 @@ ipc.on('start-recognition-now', function (event) {
             win.webContents.send('reload-screen-now')
         })
     })
-    .catch((err) => {
-        dialog.showErrorBox("Unexpected error occurred.", "Failed on attempting to connect to IBM. Error code: 183.")
-    })
+        .catch((err) => {
+            dialog.showErrorBox("Unexpected error occurred.", "Failed on attempting to connect to IBM. Error code: 183.")
+        })
 })
