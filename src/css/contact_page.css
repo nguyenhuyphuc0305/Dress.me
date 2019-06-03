@@ -1,38 +1,3 @@
-/* /* @font-face {
-	font-family: 'Anodyne';
-	src: url('../../assets/fonts/234548_0_0.eot');
-	src: url('../../assets/fonts/234548_0_0d41d.eot?#iefix') format('embedded-opentype'),
-	url('../../assets/fonts/234548_0_0.woff') format('woff'),
-	url('../../assets/fonts/234548_0_0.ttf') format('truetype');
-	
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'TradeGothicCondensed';
-	src: url('../../assets/fonts/tradegothic-cn-18.eot');
-	src: url('../../assets/fonts/tradegothic-cn-18d41d.eot?#iefix') format('embedded-opentype'),
-	url('../../assets/fonts/tradegothic-cn-18.woff') format('woff'),
-	url('../../assets/fonts/tradegothic-cn-18.ttf') format('truetype'),
-	url('../../assets/fonts/tradegothic-cn-18.svg#TradeGothicLTStdCnRegular') format('svg');
-	
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'TradeGothicCondensedBold';
-	src: url('../../assets/fonts/tradegothicltstd-bdcn20-webfont.eot');
-	src: url('../../assets/fonts/tradegothicltstd-bdcn20-webfontd41d.eot?#iefix') format('embedded-opentype'),
-	url('../../assets/fonts/tradegothicltstd-bdcn20-webfont.woff') format('woff'),
-	url('../../assets/fonts/tradegothicltstd-bdcn20-webfont.ttf') format('truetype'),
-	url('../../assets/fonts/tradegothicltstd-bdcn20-webfont.svg#TradeGothicLTStdCnBold') format('svg');
-	
-	font-weight: normal;
-	font-style: normal;
-} */
-
 /* ------------------------------------------------------- */
 /* SIMPLE RESET */
 /* ------------------------------------------------------- */
@@ -47,7 +12,6 @@ body {
 	margin: 0;
 	padding: 0 0 0 0;
 	border: none;
-	/* font-family: 'Anodyne', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	color: #000;
 	background-image: url(../../assets/images/texture.jpg);
 	
@@ -142,18 +106,8 @@ section,
 	margin-top: 20px;
 	font-size: 16px;
 	line-height: 24px;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	color: #180e09;
 }
-
-/* /* ------------------------------------------------------- */ */
-/* /* CATEGORY SCENES */ */
-/* /* ------------------------------------------------------- */ */
-/* .scenes { */
-	/* top: -100%; */
-	/* background-color: #000; */
-/* } */
-
 
 /* ------------------------------------------------------- */
 /* CONTACT */
@@ -239,7 +193,6 @@ section,
 	padding: 0 0 3px 44px;
 	font-size: 15px;
 	line-height: 31px;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	background: url('../../assets/images/controls-sprite.png') no-repeat;
 	color: #000;
 	display: block;
@@ -285,7 +238,6 @@ section,
 	margin: 0;
 	font-size: 14px;
 	line-height: 18px;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	color: #313131;
 }
 
@@ -324,11 +276,10 @@ section,
 #hcma-form .input-field,
 #hcma-form #option-field {
 	float: left;
-	width: 242px;
-	height: 24px;
+	width: 255px;
+	height: 40px;
 	margin: 0 0 13px;
 	padding: 8px 0 7px 15px;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	font-size: 16px;
 	line-height: 24px;
 	color: #aea69b;
@@ -366,7 +317,6 @@ section,
 	height: 142px;
 	margin: 10px 15px;
 	padding: 0;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	font-size: 16px;
 	line-height: 24px;
 	color: #aea69b;
@@ -379,7 +329,6 @@ section,
 	float: left;
 	width: 147px;
 	height: 34px;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	font-size: 16px;
 	line-height: 36px;
 	color: #ffeeb8;
@@ -400,7 +349,6 @@ section,
 	height: 34px;
 	margin: 0 0 0 18px;
 	padding: 0;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	font-size: 14px;
 	line-height: 34px;
 	color: #aea69b;
@@ -426,7 +374,6 @@ section,
 	width: 242px;
 	height: 34px;
 	padding: 0 0 0 15px;
-	/* font-family: 'TradeGothicCondensed', 'HelveticaNeue', 'Helvetica Neue', helvetica, sans-serif; */
 	font-size: 16px;
 	line-height: 34px;
 	color: #aea69b;
