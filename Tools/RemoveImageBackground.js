@@ -1,3 +1,4 @@
+// Remove background of imported images
 import { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile } from "remove.bg";
 
 function removeBackgroundForImageWithPath() {

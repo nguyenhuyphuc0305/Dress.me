@@ -135,9 +135,9 @@ function applyTagsToImageWithID(clotheID, newTags) {
         db.collection('clothes').doc(clotheID).update({
             tags: newTags
         })
-        .then(() => {
-            resolve()
-        })
+            .then(() => {
+                resolve()
+            })
     })
 }
 
@@ -146,9 +146,9 @@ function updateIsProcessedState(clotheID) {
         db.collection('clothes').doc(clotheID).update({
             isProcessed: true
         })
-        .then(() => {
-            resolve()
-        })
+            .then(() => {
+                resolve()
+            })
     })
 }
 
@@ -162,6 +162,7 @@ Array.prototype.clean = function (deleteValue) {
     return this;
 };
 
+// Given image ID, return its tags
 function readTagsForImageWithID(clotheID) {
     return new Promise(function (resolve) {
         db.collection('clothes').doc(clotheID).get()
@@ -170,7 +171,7 @@ function readTagsForImageWithID(clotheID) {
                     console.log("No image found")
                 } else {
                     var savedTags = doc.data().tags
-                    
+
                     if (savedTags == undefined) {
                         savedTags = []
                     }
@@ -210,6 +211,7 @@ function getAllClothesAndParseItIntoObjects() {
     })
 }
 
+// Detele an image from clothes database
 function deleteClotheWithImageID(clotheID) {
     db.collection('clothes').doc(clotheID).delete()
 }

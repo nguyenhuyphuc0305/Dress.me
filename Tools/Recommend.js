@@ -1,3 +1,4 @@
+// Tool that recommends set of clothes when initializes the app
 var Clothe = require("../Models/Clothe").Clothe
 var WeatherTool = require('./Weather')
 var SearchTool = require('./Search')
@@ -13,6 +14,7 @@ class Recommendation {
     }
 }
 
+// Given the database of user's clothes, this function will get current weather temperature and recommend a set of clothes 
 function recommendTodayOutfit(clotheDatabase) {
     return new Promise(async function (resolve) {
         //Get weather first
@@ -84,6 +86,7 @@ function recommendTodayOutfit(clotheDatabase) {
         var foundBot = false
         var foundJacket = false
 
+        // Find the matching clothes 
         allTops.forEach((top, indexT) => {
             const allTags = top.tags
             allTags.forEach((tag, indexTag) => {
@@ -139,7 +142,6 @@ function recommendTodayOutfit(clotheDatabase) {
         resolve(newRecommendation)
     })
 }
-
 
 // async function main() {
 //     DatabaseTool.getAllClothesAndParseItIntoObjects().then(async database => {

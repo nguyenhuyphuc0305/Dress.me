@@ -1,3 +1,4 @@
+// This tool using Watson visual recognition to help user add tags to the clothes automatically
 var colors = require('colors');
 const { dialog } = require('electron')
 
@@ -12,6 +13,7 @@ var visualRecognition = new VisualRecognitionV3({
     headers: { 'X-Watson-Learning-Opt-Out': 'true' }
 });
 
+// Getting tags result using API
 function getTagsForAllClothes(allClothes) {
     var errorAlreadyShown = false
     return new Promise(function (resolve, reject) {
@@ -34,7 +36,7 @@ function getTagsForAllClothes(allClothes) {
             // if (index == 0) {
             await visualRecognition.classify(params, function (err, response) {
                 if (err) {
-                    if (!errorAlreadyShown){
+                    if (!errorAlreadyShown) {
                         dialog.showErrorBox("Unexpected error occurred.", "Failed on attempting to connect to IBM. Error code: 183.")
                         errorAlreadyShown = !errorAlreadyShown
                         console.log(err);
@@ -52,11 +54,12 @@ function getTagsForAllClothes(allClothes) {
                     })
                 }
             });
-        // }
+            // }
         })
     })
 }
 
+// This function add tags to clothes database based on image ID
 async function handleIBMResultAndPutTagsOnDatabase(response, imageID) {
     return new Promise(function (resolve) {
         //Do some manipulation and push got tags here here
@@ -87,7 +90,7 @@ async function handleIBMResultAndPutTagsOnDatabase(response, imageID) {
 }
 
 async function main() {
-    DatabaseWrapper.getAllClothesAndParseItIntoObjects().then(function(database) {
+    DatabaseWrapper.getAllClothesAndParseItIntoObjects().then(function (database) {
         getTagsForAllClothes(database).then(() => {
             console.log("Successfully loaded tags.".rainbow)
         })

@@ -1,6 +1,9 @@
+// Clothes search tool 
+
 var Clothe = require("../Models/Clothe").Clothe
 var DatabaseWrapper = require('./Database')
 
+// Given the clothes database and tags the user want to find, return an array of Clothes object that match those tags based on or operation  
 function searchClothesWithTagsInDatabaseOR(searchString, database) {
     return new Promise(async function (resolve) {
         const allClothes = database
@@ -37,6 +40,7 @@ function searchClothesWithTagsInDatabaseOR(searchString, database) {
     })
 }
 
+// Given the clothes database and tags the user want to find, return an array of Clothes object that match those tags based on and operation  
 function searchClothesWithTagsInDatabaseORAND(searchString, database) {
     return new Promise(function (resolve) {
         const allClothes = database

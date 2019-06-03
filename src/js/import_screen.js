@@ -35,6 +35,7 @@ function main() {
     $('#recognize-btn').click(function () {
         ipc.send('start-recognition-now')
     })
+    // Handle context menu when right click on an image
     $('#img-container').on('contextmenu', '.imported-img', async function (event) {
         event.preventDefault();
         $('.tags-container').css({
@@ -52,6 +53,7 @@ function main() {
             $('span#' + savedTag).css({ 'display': 'block' });
         })
     })
+    // Upload tags to clothes database after choosing in context menu
     $('#context-menu ul li').click(async function (event) {
         const selectedClotheID = selectedImageID;
         const selectedTag = event.target.id
@@ -78,6 +80,7 @@ function main() {
     $('.search-icon').click(function () {
         $(this).toggleClass('current-search')
     })
+    // Search all clothes on database based on tags
     $('#letsearch').click(function () {
         var searchArray = []
         $('.current-search').each(function () {
@@ -103,13 +106,12 @@ function main() {
             })
             $('.imported-img').remove()
             $('#img-container div h1').remove()
-
-
         }
         console.log(searchArray.join())
     })
 }
 
+// Open the file dialog, choose as many as images you can to import to the database, only .jpg and .png files will be accepted
 function importNewImages() {
     dialog.showOpenDialog({
         properties: ['openFile', 'multiSelections'],
@@ -131,6 +133,7 @@ function importNewImages() {
     })
 }
 
+// Display images along with their tags on the database
 function displayAllImagesOnDatabase() {
     $('.imported-img').remove()
     DatabaseWrapper.getAllClothesAndParseItIntoObjects()
@@ -163,6 +166,7 @@ function displayAllImagesOnDatabase() {
         })
 }
 
+// Collapse context menu
 function dismissContextMenu() {
     $('.tags-container').css({
         'display': 'none'

@@ -9,6 +9,7 @@ String.prototype.format = function () {
     return a
 }
 
+//Get temperature based on zipcode
 function getWeatherForZip(zipcode, system) {
     return new Promise(resolve => {
         request('http://api.openweathermap.org/data/2.5/weather?zip={0},us&units={1}&appid=80ef16fc9f3adf6a5da8690573d81412'.format(zipcode, system), { json: true }, (err, response, body) => {

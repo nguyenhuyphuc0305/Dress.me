@@ -14,6 +14,7 @@ var DatabaseWrapper = require('./Tools/Database')
 
 let win
 
+// Create the browser window.
 function createWindow() {
     win = new BrowserWindow({
         width: 1281,
@@ -28,17 +29,22 @@ function createWindow() {
         },
     })
 
+    // Load index.html file of the app
     win.loadFile('index.html')
 
-    win.webContents.openDevTools()
+    // Open the DevTools.
+    // win.webContents.openDevTools()
 
+    // Emitted when the window is closed.
     win.on('closed', () => {
         win = null
     })
 }
 
+// This method will be called when Electron has finished initialization and is ready to create browser windows. Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
 
+// Quit when all windows are closed.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
@@ -51,6 +57,7 @@ app.on('activate', () => {
     }
 })
 
+// Recognize tags for images and display those tags
 ipc.on('start-recognition-now', function (event) {
     DatabaseWrapper.getAllClothesAndParseItIntoObjects().then(function (database) {
         RecognitionTool.getTagsForAllClothes(database).then(() => {

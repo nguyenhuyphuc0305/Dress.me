@@ -25,7 +25,7 @@ To run the application, change into the app's directory, install dependencies, r
     npm start
 ```
 
-#License
+# License
 This project is licensed under the GNU license - see [LICENSE](https://github.com/nguyenhuyphuc0305/Dress.me/blob/master/LICENSE) file for details
 
 

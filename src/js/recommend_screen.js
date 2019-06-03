@@ -20,6 +20,7 @@ async function main() {
     setTypeOnClick()
 }
 
+// Display a set of recommendation clothes based on weather on initiation
 async function displayRecommendation() {
     const recommendation = await RecommendTool.recommendTodayOutfit(clothesDatabase)
     console.log(recommendation)
@@ -45,6 +46,7 @@ async function displayRecommendation() {
     }
 }
 
+// Show all top on clothes database on initiation
 async function showTopOnLoad() {
     current = 'top'
     $('.main-clothes').remove()
@@ -59,6 +61,7 @@ async function showTopOnLoad() {
     $('#clothes-select-header-text').append('Top')
 }
 
+// Show all clothes based on type on click 
 function setTypeOnClick() {
     $('.clothes-select-box').click(async function (event) {
         var selectedTag = event.target.id.split('-')[2]
